@@ -82,6 +82,18 @@ header{
 }
 .cat-bar::before{ left:34px; background:linear-gradient(to right, rgba(12,12,13,0.9), transparent); }
 .cat-bar::after{ right:34px; background:linear-gradient(to left, rgba(12,12,13,0.9), transparent); }
+.search-bar{ padding:10px 20px; border-bottom:1px solid var(--line); }
+.search-bar input{
+  width:100%; max-width:340px; background:var(--panel-2); border:1px solid var(--line);
+  color:var(--text); padding:9px 14px; font-size:13px; font-family:inherit;
+  border-radius:0; transition:border-color .2s ease;
+}
+.search-bar input::placeholder{ color:var(--muted); }
+.search-bar input:focus{ outline:none; border-color:var(--accent); }
+.no-results{
+  grid-column:1/-1; text-align:center; padding:60px 20px; color:var(--muted); font-size:14px;
+  background:var(--bg);
+}
 .cat-arrow{
   flex-shrink:0; background:none; border:none; color:var(--muted); font-size:20px;
   padding:8px 8px; cursor:pointer; line-height:1; z-index:2;
@@ -376,6 +388,9 @@ footer{text-align:center; padding:30px; color:var(--muted); font-size:12px; bord
   <button class="cat-arrow cat-arrow-left" onclick="scrollNav(-1)" aria-label="Ver categorías anteriores">‹</button>
   <nav id="tabs"></nav>
   <button class="cat-arrow cat-arrow-right" onclick="scrollNav(1)" aria-label="Ver más categorías">›</button>
+</div>
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="Buscar producto..." oninput="setSearch(this.value)">
 </div>
 </div>
 
@@ -783,6 +798,14 @@ const PRODUCTS = [
     sizes: ["S", "M", "L", "XL"]
   },
 {
+    id: 1046,
+    name: "Sudadera Scuffers",
+    category: "Novedades",
+    price: 30.0,
+    images: ["images/sudadera-scuffers-portada.png", "images/sudadera-scuffers-real-1.png", "images/sudadera-scuffers-real-2.png", "images/sudadera-scuffers-real-3.png", "images/sudadera-scuffers-real-4.png", "images/sudadera-scuffers-real-5.png", "images/sudadera-scuffers-real-6.png", "images/sudadera-scuffers-real-7.png"],
+    sizes: ["S", "M", "L", "XL"]
+  },
+{
     id: 55,
     name: "STUSSY LUCKY TEE",
     category: "Camisetas",
@@ -817,7 +840,7 @@ const PRODUCTS = [
 {
     id: 59,
     name: "Alo Yoga Runners (Mas Colores Disponibles)",
-    category: "Novedades",
+    category: "Zapatillas",
     price: 45.0,
     images: ["images/0001-alo-yoga-runners-mas-colores-disponibles.jpg", "images/alo-yoga-runners-mas-colores-disponibles-2.png", "images/alo-yoga-runners-mas-colores-disponibles-3.png", "images/alo-yoga-runners-mas-colores-disponibles-4.png", "images/alo-yoga-runners-mas-colores-disponibles-5.png", "images/alo-yoga-runners-mas-colores-disponibles-6.png"],
     sizes: ["S", "M", "L", "XL"]
@@ -825,7 +848,7 @@ const PRODUCTS = [
 {
     id: 60,
     name: "Vaqueros Cortos Syna (Mas Colores Disponibles)",
-    category: "Novedades",
+    category: "Pantalones Cortos",
     price: 30.0,
     images: ["images/0002-vaqueros-cortos-syna-mas-colores-disponibles.jpg", "images/vaqueros-cortos-syna-mas-colores-disponibles-2.png", "images/vaqueros-cortos-syna-mas-colores-disponibles-3.png"],
     sizes: ["S", "M", "L", "XL"]
@@ -833,7 +856,7 @@ const PRODUCTS = [
 {
     id: 61,
     name: "Gorra Dsquared",
-    category: "Novedades",
+    category: "Accesorios",
     price: 22.0,
     images: ["images/0003-gorra-dsquared.jpg", "images/gorra-dsquared-2.png", "images/gorra-dsquared-3.png", "images/0004-gorra-dsquared.jpg", "images/gorra-dsquared-2-2.png", "images/gorra-dsquared-3-2.png"],
     sizes: ["S", "M", "L", "XL"]
@@ -841,7 +864,7 @@ const PRODUCTS = [
 {
     id: 63,
     name: "Camiseta Cold Culture (Mas Colores Disponibles)",
-    category: "Novedades",
+    category: "Camisetas",
     price: 25.0,
     images: ["images/0005-camiseta-cold-culture-mas-colores-disponibles.jpg", "images/0006-camiseta-cold-culture-mas-colores-disponibles.jpg"],
     sizes: ["S", "M", "L", "XL"]
@@ -849,7 +872,7 @@ const PRODUCTS = [
 {
     id: 65,
     name: "Camiseta Cold Culture",
-    category: "Novedades",
+    category: "Camisetas",
     price: 25.0,
     images: ["images/0007-camiseta-cold-culture.jpg", "images/0008-camiseta-cold-culture.jpg", "images/0009-camiseta-cold-culture.jpg", "images/0013-camiseta-cold-culture.jpg", "images/0014-camiseta-cold-culture.jpg", "images/0015-camiseta-cold-culture.jpg", "images/0016-camiseta-cold-culture.jpg"],
     sizes: ["S", "M", "L", "XL"]
@@ -857,7 +880,7 @@ const PRODUCTS = [
 {
     id: 68,
     name: "Camiseta Scuffers",
-    category: "Novedades",
+    category: "Camisetas",
     price: 25.0,
     images: ["images/0010-camiseta-scuffers.jpg"],
     sizes: ["S", "M", "L", "XL"]
@@ -865,7 +888,7 @@ const PRODUCTS = [
 {
     id: 69,
     name: "Camiseta Nude Project",
-    category: "Novedades",
+    category: "Camisetas",
     price: 25.0,
     images: ["images/0011-camiseta-nude-project.jpg", "images/0012-camiseta-nude-project.jpg"],
     sizes: ["S", "M", "L", "XL"]
@@ -873,7 +896,7 @@ const PRODUCTS = [
 {
     id: 75,
     name: "Camiseta Bape",
-    category: "Novedades",
+    category: "Camisetas",
     price: 25.0,
     images: ["images/0018-camiseta-bape.jpg"],
     sizes: ["S", "M", "L", "XL"]
@@ -881,7 +904,7 @@ const PRODUCTS = [
 {
     id: 76,
     name: "Camisetas New Era",
-    category: "Novedades",
+    category: "Camisetas",
     price: 25.0,
     images: ["images/0019-camisetas-new-era.jpg"],
     sizes: ["S", "M", "L", "XL"]
@@ -889,7 +912,7 @@ const PRODUCTS = [
 {
     id: 77,
     name: "Calcetines Alo Yoga",
-    category: "Novedades",
+    category: "Accesorios",
     price: 6.0,
     images: ["images/0020-calcetines-alo-yoga.jpg"],
     sizes: ["S", "M", "L", "XL"]
@@ -897,7 +920,7 @@ const PRODUCTS = [
 {
     id: 78,
     name: "Travis Scott Sneakers",
-    category: "Novedades",
+    category: "Zapatillas",
     price: 50.0,
     images: ["images/0021-travis-scott-sneakers.jpg"],
     sizes: ["40", "41", "42", "43", "44", "45"]
@@ -905,7 +928,7 @@ const PRODUCTS = [
 {
     id: 79,
     name: "Air Force 1 Kobe Bryant",
-    category: "Novedades",
+    category: "Zapatillas",
     price: 45.0,
     images: ["images/0022-air-force-1-kobe-bryant.jpg"],
     sizes: ["40", "41", "42", "43", "44", "45"]
@@ -913,7 +936,7 @@ const PRODUCTS = [
 {
     id: 80,
     name: "Adidas Samba Wales Bonner",
-    category: "Novedades",
+    category: "Zapatillas",
     price: 45.0,
     images: ["images/0023-adidas-samba-wales-bonner.jpg"],
     sizes: ["40", "41", "42", "43", "44", "45"]
@@ -921,7 +944,7 @@ const PRODUCTS = [
 {
     id: 81,
     name: "Adidas Samba Leopardo",
-    category: "Novedades",
+    category: "Zapatillas",
     price: 45.0,
     images: ["images/0024-adidas-samba-leopardo.jpg"],
     sizes: ["40", "41", "42", "43", "44", "45"]
@@ -929,7 +952,7 @@ const PRODUCTS = [
 {
     id: 82,
     name: "Camiseta Charles Oliveira",
-    category: "Novedades",
+    category: "Camisetas",
     price: 25.0,
     images: ["images/0025-camiseta-charles-oliveira.jpg"],
     sizes: ["S", "M", "L", "XL"]
@@ -937,7 +960,7 @@ const PRODUCTS = [
 {
     id: 83,
     name: "Camiseta Alex Pereira",
-    category: "Novedades",
+    category: "Camisetas",
     price: 25.0,
     images: ["images/0026-camiseta-alex-pereira.jpg"],
     sizes: ["S", "M", "L", "XL"]
@@ -945,7 +968,7 @@ const PRODUCTS = [
 {
     id: 84,
     name: "Pantalones Cortos Nocta",
-    category: "Novedades",
+    category: "Pantalones Cortos",
     price: 25.0,
     images: ["images/0027-pantalones-cortos-nocta.jpg"],
     sizes: ["S", "M", "L", "XL"]
@@ -953,7 +976,7 @@ const PRODUCTS = [
 {
     id: 85,
     name: "Gorra Alo Yoga (Mas Colores Disponibles)",
-    category: "Novedades",
+    category: "Accesorios",
     price: 20.0,
     images: ["images/0028-gorra-alo-yoga-mas-colores-disponibles.jpg"],
     sizes: ["S", "M", "L", "XL"]
@@ -961,7 +984,7 @@ const PRODUCTS = [
 {
     id: 86,
     name: "Gafas De Sol Maybach (Mas Colores Disponibles)",
-    category: "Novedades",
+    category: "Accesorios",
     price: 25.0,
     images: ["images/0029-gafas-de-sol-maybach-mas-colores-disponibles.jpg"],
     sizes: ["S", "M", "L", "XL"]
@@ -969,7 +992,7 @@ const PRODUCTS = [
 {
     id: 87,
     name: "Zapatillas Hugo Boss (Mas Colores Disponibles)",
-    category: "Novedades",
+    category: "Zapatillas",
     price: 50.0,
     images: ["images/0030-zapatillas-hugo-boss-mas-colores-disponibles.jpg"],
     sizes: ["40", "41", "42", "43", "44", "45"]
@@ -977,7 +1000,7 @@ const PRODUCTS = [
 {
     id: 88,
     name: "Chanel Sneakers",
-    category: "Novedades",
+    category: "Zapatillas",
     price: 50.0,
     images: ["images/0031-chanel-sneakers.jpg"],
     sizes: ["40", "41", "42", "43", "44", "45"]
@@ -985,7 +1008,7 @@ const PRODUCTS = [
 {
     id: 89,
     name: "Nike Mind 001 Nocta",
-    category: "Novedades",
+    category: "Zapatillas",
     price: 40.0,
     images: ["images/0032-nike-mind-001-nocta.jpg", "images/0033-nike-mind-001-nocta.jpg"],
     sizes: ["S", "M", "L", "XL"]
@@ -993,7 +1016,7 @@ const PRODUCTS = [
 {
     id: 91,
     name: "Nike Mind 001",
-    category: "Novedades",
+    category: "Zapatillas",
     price: 40.0,
     images: ["images/0034-nike-mind-001.jpg", "images/0035-nike-mind-001.jpg", "images/0036-nike-mind-001.jpg"],
     sizes: ["S", "M", "L", "XL"]
@@ -1001,7 +1024,7 @@ const PRODUCTS = [
 {
     id: 94,
     name: "Bañador Fendi Reactivo Al Agua",
-    category: "Novedades",
+    category: "Pantalones Cortos",
     price: 40.0,
     images: ["images/0037-banador-fendi-reactivo-al-agua.jpg"],
     sizes: ["S", "M", "L", "XL"]
@@ -1009,7 +1032,7 @@ const PRODUCTS = [
 {
     id: 95,
     name: "Bañador Lacoste",
-    category: "Novedades",
+    category: "Pantalones Cortos",
     price: 40.0,
     images: ["images/0038-banador-lacoste.jpg", "images/0039-banador-lacoste.jpg", "images/0040-banador-lacoste.jpg"],
     sizes: ["S", "M", "L", "XL"]
@@ -1017,7 +1040,7 @@ const PRODUCTS = [
 {
     id: 98,
     name: "Protect Jeans",
-    category: "Novedades",
+    category: "Pantalones Cortos",
     price: 30.0,
     images: ["images/0041-protect-jeans.jpg"],
     sizes: ["S", "M", "L", "XL"]
@@ -1025,7 +1048,7 @@ const PRODUCTS = [
 {
     id: 99,
     name: "Pantalones Cortos Corteiz",
-    category: "Novedades",
+    category: "Pantalones Cortos",
     price: 27.0,
     images: ["images/0042-pantalones-cortos-corteiz.jpg", "images/0043-pantalones-cortos-corteiz.jpg", "images/0044-pantalones-cortos-corteiz.jpg", "images/0562-pantalones-cortos-corteiz.jpg"],
     sizes: ["S", "M", "L", "XL"]
@@ -1033,7 +1056,7 @@ const PRODUCTS = [
 {
     id: 102,
     name: "Conjunto Represent",
-    category: "Novedades",
+    category: "Camisetas",
     price: 45.0,
     images: ["images/0045-conjunto-represent.jpg", "images/0046-conjunto-represent.jpg", "images/0047-conjunto-represent.jpg"],
     sizes: ["S", "M", "L", "XL"]
@@ -1041,7 +1064,7 @@ const PRODUCTS = [
 {
     id: 105,
     name: "Bolso Lacoste",
-    category: "Novedades",
+    category: "Accesorios",
     price: 35.0,
     images: ["images/0048-bolso-lacoste.jpg", "images/0049-bolso-lacoste.jpg", "images/0050-bolso-lacoste.jpg"],
     sizes: ["S", "M", "L", "XL"]
@@ -1049,7 +1072,7 @@ const PRODUCTS = [
 {
     id: 108,
     name: "Carhartt Jeans",
-    category: "Novedades",
+    category: "Pantalones Cortos",
     price: 30.0,
     images: ["images/0051-carhartt-jeans.jpg", "images/0052-carhartt-jeans.jpg"],
     sizes: ["S", "M", "L", "XL"]
@@ -1875,7 +1898,7 @@ const PRODUCTS = [
     name: "Bape Polo",
     category: "Camisetas",
     price: 30.0,
-    images: ["images/0384-bape-polo.jpg"],
+    images: ["images/0384-bape-polo.jpg", "images/bape-polo-real-1.png", "images/bape-polo-real-2.png", "images/bape-polo-real-3.png", "images/bape-polo-real-4.png", "images/bape-polo-real-5.png"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -1883,7 +1906,7 @@ const PRODUCTS = [
     name: "Ralph Lauren Camisa",
     category: "Camisetas",
     price: 35.0,
-    images: ["images/0385-ralph-lauren-camisa.jpg"],
+    images: ["images/0385-ralph-lauren-camisa.jpg", "images/ralph-lauren-camisa-real-1.png", "images/ralph-lauren-camisa-real-2.png", "images/ralph-lauren-camisa-real-3.png", "images/ralph-lauren-camisa-real-4.png", "images/ralph-lauren-camisa-real-5.png"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -1891,7 +1914,7 @@ const PRODUCTS = [
     name: "Lacoste Camisetas",
     category: "Camisetas",
     price: 25.0,
-    images: ["images/0389-lacoste-camisetas.jpg", "images/0390-lacoste-camisetas.jpg", "images/0391-lacoste-camisetas.jpg", "images/0392-lacoste-camisetas.jpg", "images/0393-lacoste-camisetas.jpg", "images/0394-lacoste-camisetas.jpg", "images/0395-lacoste-camisetas.jpg", "images/0396-lacoste-camisetas.jpg", "images/0397-lacoste-camisetas.jpg", "images/0398-lacoste-camisetas.jpg"],
+    images: ["images/0389-lacoste-camisetas.jpg", "images/0390-lacoste-camisetas.jpg", "images/0391-lacoste-camisetas.jpg", "images/0392-lacoste-camisetas.jpg", "images/0393-lacoste-camisetas.jpg", "images/0394-lacoste-camisetas.jpg", "images/0395-lacoste-camisetas.jpg", "images/0396-lacoste-camisetas.jpg", "images/0397-lacoste-camisetas.jpg", "images/0398-lacoste-camisetas.jpg", "images/lacoste-camisetas-real-1.png", "images/lacoste-camisetas-real-2.png", "images/lacoste-camisetas-real-3.png"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -1899,7 +1922,7 @@ const PRODUCTS = [
     name: "Stussy Camisetas",
     category: "Camisetas",
     price: 25.0,
-    images: ["images/0399-stussy-camisetas.jpg", "images/0400-stussy-camisetas.jpg", "images/0401-stussy-camisetas.jpg", "images/0402-stussy-camisetas.jpg", "images/0403-stussy-camisetas.jpg", "images/0404-stussy-camisetas.jpg", "images/0405-stussy-camisetas.jpg", "images/0406-stussy-camisetas.jpg", "images/0407-stussy-camisetas.jpg", "images/0408-stussy-camisetas.jpg", "images/0409-stussy-camisetas.jpg", "images/0410-stussy-camisetas.jpg", "images/0411-stussy-camisetas.jpg", "images/0412-stussy-camisetas.jpg", "images/0413-stussy-camisetas.jpg", "images/0414-stussy-camisetas.jpg", "images/0415-stussy-camisetas.jpg", "images/0416-stussy-camisetas.jpg", "images/0417-stussy-camisetas.jpg", "images/0418-stussy-camisetas.jpg", "images/0419-stussy-camisetas.jpg", "images/0420-stussy-camisetas.jpg", "images/0421-stussy-camisetas.jpg", "images/0422-stussy-camisetas.jpg", "images/0423-stussy-camisetas.jpg", "images/0424-stussy-camisetas.jpg", "images/0425-stussy-camisetas.jpg", "images/0426-stussy-camisetas.jpg", "images/0427-stussy-camisetas.jpg", "images/0428-stussy-camisetas.jpg", "images/0429-stussy-camisetas.jpg", "images/0430-stussy-camisetas.jpg"],
+    images: ["images/0399-stussy-camisetas.jpg", "images/0400-stussy-camisetas.jpg", "images/0401-stussy-camisetas.jpg", "images/0402-stussy-camisetas.jpg", "images/0403-stussy-camisetas.jpg", "images/0404-stussy-camisetas.jpg", "images/0405-stussy-camisetas.jpg", "images/0406-stussy-camisetas.jpg", "images/0407-stussy-camisetas.jpg", "images/0408-stussy-camisetas.jpg", "images/0409-stussy-camisetas.jpg", "images/0410-stussy-camisetas.jpg", "images/0411-stussy-camisetas.jpg", "images/0412-stussy-camisetas.jpg", "images/0413-stussy-camisetas.jpg", "images/0414-stussy-camisetas.jpg", "images/0415-stussy-camisetas.jpg", "images/0416-stussy-camisetas.jpg", "images/0417-stussy-camisetas.jpg", "images/0418-stussy-camisetas.jpg", "images/0419-stussy-camisetas.jpg", "images/0420-stussy-camisetas.jpg", "images/0421-stussy-camisetas.jpg", "images/0422-stussy-camisetas.jpg", "images/0423-stussy-camisetas.jpg", "images/0424-stussy-camisetas.jpg", "images/0425-stussy-camisetas.jpg", "images/0426-stussy-camisetas.jpg", "images/0427-stussy-camisetas.jpg", "images/0428-stussy-camisetas.jpg", "images/0429-stussy-camisetas.jpg", "images/0430-stussy-camisetas.jpg", "images/stussy-camisetas-real-1.png", "images/stussy-camisetas-real-2.png", "images/stussy-camisetas-real-3.png", "images/stussy-camisetas-real-4.png", "images/stussy-camisetas-real-5.png", "images/stussy-camisetas-real-6.png", "images/stussy-camisetas-real-7.png", "images/stussy-camisetas-real-8.png", "images/stussy-camisetas-real-9.png", "images/stussy-camisetas-real-10.png"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -1915,15 +1938,7 @@ const PRODUCTS = [
     name: "Stussy Polo",
     category: "Camisetas",
     price: 28.0,
-    images: ["images/0434-stussy-polo.jpg", "images/0435-stussy-polo.jpg"],
-    sizes: ["S", "M", "L", "XL"]
-  },
-{
-    id: 489,
-    name: "Stussy Polo (Disponible Blanco Y Negro)",
-    category: "Camisetas",
-    price: 28.0,
-    images: ["images/0436-stussy-polo-disponible-blanco-y-negro.jpg"],
+    images: ["images/0434-stussy-polo.jpg", "images/0435-stussy-polo.jpg", "images/0436-stussy-polo-disponible-blanco-y-negro.jpg", "images/stussy-polo-real-1.png", "images/stussy-polo-real-2.png", "images/stussy-polo-real-3.png", "images/stussy-polo-real-4.png"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -1939,7 +1954,7 @@ const PRODUCTS = [
     name: "Palm Angels (+70 Modelos De Camiseta)",
     category: "Camisetas",
     price: 25.0,
-    images: ["images/0449-palm-angels-70-modelos-de-camiseta.jpg", "images/0450-palm-angels-70-modelos-de-camiseta.jpg", "images/0451-palm-angels-70-modelos-de-camiseta.jpg", "images/0452-palm-angels-70-modelos-de-camiseta.jpg"],
+    images: ["images/0449-palm-angels-70-modelos-de-camiseta.jpg", "images/0450-palm-angels-70-modelos-de-camiseta.jpg", "images/0451-palm-angels-70-modelos-de-camiseta.jpg", "images/0452-palm-angels-70-modelos-de-camiseta.jpg", "images/palm-angels-real-1.png", "images/palm-angels-real-2.png", "images/palm-angels-real-3.png", "images/palm-angels-real-4.png", "images/palm-angels-real-5.png", "images/palm-angels-real-6.png", "images/palm-angels-real-7.png", "images/palm-angels-real-8.png", "images/palm-angels-real-9.png", "images/palm-angels-real-10.png", "images/palm-angels-real-11.png", "images/palm-angels-real-12.png"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -1947,7 +1962,7 @@ const PRODUCTS = [
     name: "Moncler Polo",
     category: "Camisetas",
     price: 27.0,
-    images: ["images/0453-moncler-polo.jpg", "images/0454-moncler-polo.jpg"],
+    images: ["images/0453-moncler-polo.jpg", "images/0454-moncler-polo.jpg", "images/moncler-polo-real-1.png", "images/moncler-polo-real-2.png"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -1955,7 +1970,7 @@ const PRODUCTS = [
     name: "Stone Island Manga Larga (Muchos Colores Disponibles)",
     category: "Camisetas",
     price: 30.0,
-    images: ["images/0455-stone-island-manga-larga-muchos-colores-disponibles.jpg"],
+    images: ["images/0455-stone-island-manga-larga-muchos-colores-disponibles.jpg", "images/stone-island-manga-larga-real-1.png", "images/stone-island-manga-larga-real-2.png", "images/stone-island-manga-larga-real-3.png", "images/stone-island-manga-larga-real-4.png"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -1963,7 +1978,7 @@ const PRODUCTS = [
     name: "Stone Island Camisetas",
     category: "Camisetas",
     price: 25.0,
-    images: ["images/0456-stone-island-camisetas.jpg", "images/0457-stone-island-camisetas.jpg", "images/0458-stone-island-camisetas.jpg"],
+    images: ["images/0456-stone-island-camisetas.jpg", "images/0457-stone-island-camisetas.jpg", "images/0458-stone-island-camisetas.jpg", "images/stone-island-camisetas-real-1.png", "images/stone-island-camisetas-real-2.png", "images/stone-island-camisetas-real-3.png", "images/stone-island-camisetas-real-4.png", "images/stone-island-camisetas-real-5.png"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -1971,7 +1986,7 @@ const PRODUCTS = [
     name: "Nike Compresión X Essentials",
     category: "Camisetas",
     price: 23.0,
-    images: ["images/0459-nike-compresion-x-essentials.jpg"],
+    images: ["images/0459-nike-compresion-x-essentials.jpg", "images/nike-compresion-x-essentials-real-1.png", "images/nike-compresion-x-essentials-real-2.png", "images/nike-compresion-x-essentials-real-3.png", "images/nike-compresion-x-essentials-real-4.png", "images/nike-compresion-x-essentials-real-5.png", "images/nike-compresion-x-essentials-real-6.png"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -1979,7 +1994,7 @@ const PRODUCTS = [
     name: "Nike Compresión (Manga Larga Tambien Disponible)",
     category: "Camisetas",
     price: 23.0,
-    images: ["images/0460-nike-compresion-manga-larga-tambien-disponible.jpg"],
+    images: ["images/0460-nike-compresion-manga-larga-tambien-disponible.jpg", "images/nike-compresion-manga-larga-real-1.png", "images/nike-compresion-manga-larga-real-2.png", "images/nike-compresion-manga-larga-real-3.png", "images/nike-compresion-manga-larga-real-4.png", "images/nike-compresion-manga-larga-real-5.png", "images/nike-compresion-manga-larga-real-6.png", "images/nike-compresion-manga-larga-real-7.png"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2003,7 +2018,7 @@ const PRODUCTS = [
     name: "Denim Tears Camiseta (Muchos Colores Disponibles)",
     category: "Camisetas",
     price: 25.0,
-    images: ["images/0473-denim-tears-camiseta-muchos-colores-disponibles.jpg"],
+    images: ["images/0473-denim-tears-camiseta-muchos-colores-disponibles.jpg", "images/denim-tears-camiseta-real-1.png", "images/denim-tears-camiseta-real-2.png", "images/denim-tears-camiseta-real-3.png", "images/denim-tears-camiseta-real-4.png"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2011,7 +2026,7 @@ const PRODUCTS = [
     name: "Conjunto Nike (Disponible En Mas Colores)",
     category: "Camisetas",
     price: 35.0,
-    images: ["images/0474-conjunto-nike-disponible-en-mas-colores.jpg"],
+    images: ["images/0474-conjunto-nike-disponible-en-mas-colores.jpg", "images/conjunto-nike-real-1.png", "images/conjunto-nike-real-2.png", "images/conjunto-nike-real-3.png", "images/conjunto-nike-real-4.png", "images/conjunto-nike-real-5.png", "images/conjunto-nike-real-6.png", "images/conjunto-nike-real-7.png", "images/conjunto-nike-real-8.png", "images/conjunto-nike-real-9.png"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2019,7 +2034,7 @@ const PRODUCTS = [
     name: "Prada Camisa",
     category: "Camisetas",
     price: 40.0,
-    images: ["images/0475-prada-camisa.jpg", "images/0476-prada-camisa.jpg"],
+    images: ["images/0475-prada-camisa.jpg", "images/0476-prada-camisa.jpg", "images/prada-camisa-real-1.png", "images/prada-camisa-real-2.png", "images/prada-camisa-real-3.png", "images/prada-camisa-real-4.png"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2035,15 +2050,7 @@ const PRODUCTS = [
     name: "Under Armour Entrenamiento (Mas Colores Disponibles)",
     category: "Camisetas",
     price: 25.0,
-    images: ["images/0484-under-armour-entrenamiento-mas-colores-disponibles.jpg", "images/0485-under-armour-entrenamiento-mas-colores-disponibles.jpg"],
-    sizes: ["S", "M", "L", "XL"]
-  },
-{
-    id: 539,
-    name: "Under Armour Entrenamiento (Mas Modelos Disponibles)",
-    category: "Camisetas",
-    price: 25.0,
-    images: ["images/0486-under-armour-entrenamiento-mas-modelos-disponibles.jpg", "images/0487-under-armour-entrenamiento-mas-modelos-disponibles.jpg"],
+    images: ["images/0484-under-armour-entrenamiento-mas-colores-disponibles.jpg", "images/0485-under-armour-entrenamiento-mas-colores-disponibles.jpg", "images/under-armour-entrenamiento-colores-real-1.png", "images/under-armour-entrenamiento-colores-real-2.png", "images/under-armour-entrenamiento-colores-real-3.png", "images/under-armour-entrenamiento-colores-real-4.png", "images/under-armour-entrenamiento-colores-real-5.png", "images/under-armour-entrenamiento-colores-real-6.png", "images/0486-under-armour-entrenamiento-mas-modelos-disponibles.jpg", "images/0487-under-armour-entrenamiento-mas-modelos-disponibles.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2051,7 +2058,7 @@ const PRODUCTS = [
     name: "Travis Scott Cactus Jack X Mcdonald´S",
     category: "Camisetas",
     price: 25.0,
-    images: ["images/0488-travis-scott-cactus-jack-x-mcdonalds.jpg"],
+    images: ["images/0488-travis-scott-cactus-jack-x-mcdonalds.jpg", "images/travis-scott-cactus-jack-mcdonalds-real-1.png", "images/travis-scott-cactus-jack-mcdonalds-real-2.png", "images/travis-scott-cactus-jack-mcdonalds-real-3.png", "images/travis-scott-cactus-jack-mcdonalds-real-4.png", "images/travis-scott-cactus-jack-mcdonalds-real-5.png", "images/travis-scott-cactus-jack-mcdonalds-real-6.png"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2059,7 +2066,7 @@ const PRODUCTS = [
     name: "Travis Scott Cactus Jack",
     category: "Camisetas",
     price: 26.0,
-    images: ["images/0489-travis-scott-cactus-jack.jpg", "images/0490-travis-scott-cactus-jack.jpg", "images/0491-travis-scott-cactus-jack.jpg", "images/0492-travis-scott-cactus-jack.jpg", "images/0493-travis-scott-cactus-jack.jpg", "images/0494-travis-scott-cactus-jack.jpg"],
+    images: ["images/0489-travis-scott-cactus-jack.jpg", "images/0490-travis-scott-cactus-jack.jpg", "images/0491-travis-scott-cactus-jack.jpg", "images/0492-travis-scott-cactus-jack.jpg", "images/0493-travis-scott-cactus-jack.jpg", "images/0494-travis-scott-cactus-jack.jpg", "images/travis-scott-cactus-jack-real-1.png", "images/travis-scott-cactus-jack-real-2.png", "images/travis-scott-cactus-jack-real-3.png", "images/travis-scott-cactus-jack-real-4.png", "images/travis-scott-cactus-jack-real-5.png", "images/travis-scott-cactus-jack-real-6.png", "images/travis-scott-cactus-jack-real-7.png", "images/travis-scott-cactus-jack-real-8.png", "images/travis-scott-cactus-jack-real-9.png"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -3317,6 +3324,16 @@ const PRODUCTS = [
    ============================================================ */
 let cart = []; // {id, name, price, size, image, qty}
 let activeCategory = "Todos";
+let searchQuery = "";
+
+function normalizeText(s){
+  return s.toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+}
+
+function setSearch(value){
+  searchQuery = value;
+  renderGrid();
+}
 
 function money(n){ return n.toLocaleString('es-ES', {minimumFractionDigits:2, maximumFractionDigits:2}) + " €"; }
 
@@ -3360,7 +3377,11 @@ function setCategory(cat){
 
 function renderGrid(){
   const grid = document.getElementById('grid');
-  const items = activeCategory === "Todos" ? PRODUCTS : PRODUCTS.filter(p => p.category === activeCategory);
+  let items = activeCategory === "Todos" ? PRODUCTS : PRODUCTS.filter(p => p.category === activeCategory);
+  if(searchQuery.trim() !== ''){
+    const q = normalizeText(searchQuery.trim());
+    items = items.filter(p => normalizeText(p.name).includes(q));
+  }
   grid.innerHTML = items.map(p => {
     const media = getMedia(p);
     const cover = getCover(p);
@@ -3381,7 +3402,7 @@ function renderGrid(){
     return `
     <div class="card">
       <div class="imgwrap ${isPdfPhoto ? 'contain-img' : ''}" onclick="openGallery(${p.id})">
-        <img src="${cover}" alt="${p.name}" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'noimg',innerText:'Añade la foto en:\\n${cover}'}))">
+        <img src="${cover}" alt="${p.name}" loading="lazy" decoding="async" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'noimg',innerText:'Añade la foto en:\\n${cover}'}))">
         ${badge}
       </div>
       <div class="body">
@@ -3397,6 +3418,9 @@ function renderGrid(){
     </div>
   `;
   }).join('');
+  if(items.length === 0){
+    grid.innerHTML = `<div class="no-results">No hay productos que coincidan con tu búsqueda.</div>`;
+  }
 }
 
 function addToCart(id){
