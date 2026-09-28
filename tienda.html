@@ -123,9 +123,13 @@ header{
 .cat-bar.searching .tab.active{ color:var(--muted); border-bottom-color:transparent; }
 body.is-searching .hero{ display:none; }
 @media (max-width:600px){
-  .search-bar{ padding:10px 14px; }
-  .search-box input{ padding:12px 10px; font-size:16px; }
-  .search-icon{ margin-left:14px; }
+  .search-bar{ padding:8px 12px 10px; gap:5px; }
+  .search-box{ max-width:none; }
+  .search-box:focus-within{ box-shadow:0 0 0 2px rgba(207,232,30,0.14); }
+  .search-icon{ width:17px; height:17px; margin-left:14px; }
+  .search-box input{ padding:11px 8px; font-size:16px; } /* 16px evita el zoom automático del iPhone */
+  .search-clear{ width:28px; height:28px; font-size:14px; margin-right:6px; }
+  .search-info{ font-size:11px; letter-spacing:0.02em; }
 }
 .no-results{
   grid-column:1/-1; text-align:center; padding:60px 20px; color:var(--muted); font-size:14px;
@@ -413,7 +417,7 @@ footer{text-align:center; padding:30px; color:var(--muted); font-size:12px; bord
    ============================================================ */
 @media (max-width: 640px){
   header{
-    padding:14px 16px;
+    padding:10px 16px;
   }
   .logo-img{ height:36px; }
   .cat-arrow{ display:none; }
@@ -3606,6 +3610,17 @@ function setSearch(value){
   renderGrid();
 }
 
+// En el móvil el texto de ejemplo es más corto para que quepa entero
+const SEARCH_PLACEHOLDER_PC = 'Busca por marca o modelo… (ej: Nike, Jordan 4, Corteiz)';
+const SEARCH_PLACEHOLDER_MOVIL = 'Buscar marca o modelo…';
+const isMobileView = () => window.matchMedia('(max-width:600px)').matches;
+function updateSearchPlaceholder(){
+  const input = document.getElementById('searchInput');
+  if(input) input.placeholder = isMobileView() ? SEARCH_PLACEHOLDER_MOVIL : SEARCH_PLACEHOLDER_PC;
+}
+window.addEventListener('resize', () => { updateSearchPlaceholder(); if(searchQuery.trim()) renderGrid(); });
+document.addEventListener('DOMContentLoaded', updateSearchPlaceholder);
+
 function clearSearch(){
   const input = document.getElementById('searchInput');
   input.value = '';
@@ -3741,7 +3756,9 @@ function renderGrid(){
   if(info){
     const safe = searchQuery.trim().replace(/[<>&"]/g, '');
     info.innerHTML = searching
-      ? `<strong>${items.length}</strong> ${items.length === 1 ? 'resultado' : 'resultados'} para «${safe}» en todas las secciones`
+      ? (isMobileView()
+          ? `<strong>${items.length}</strong> ${items.length === 1 ? 'resultado' : 'resultados'} en todas las secciones`
+          : `<strong>${items.length}</strong> ${items.length === 1 ? 'resultado' : 'resultados'} para «${safe}» en todas las secciones`)
       : '';
   }
   grid.innerHTML = items.map(p => {
@@ -4007,6 +4024,7 @@ function prevMedia(){
   renderGalleryStage();
 }
 
+updateSearchPlaceholder();
 renderTabs();
 renderGrid();
 renderCart();
