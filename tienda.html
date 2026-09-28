@@ -82,14 +82,51 @@ header{
 }
 .cat-bar::before{ left:34px; background:linear-gradient(to right, rgba(12,12,13,0.9), transparent); }
 .cat-bar::after{ right:34px; background:linear-gradient(to left, rgba(12,12,13,0.9), transparent); }
-.search-bar{ padding:10px 20px; border-bottom:1px solid var(--line); }
-.search-bar input{
-  width:100%; max-width:340px; background:var(--panel-2); border:1px solid var(--line);
-  color:var(--text); padding:9px 14px; font-size:13px; font-family:inherit;
-  border-radius:0; transition:border-color .2s ease;
+.search-bar{
+  padding:14px 20px; border-bottom:1px solid var(--line);
+  display:flex; flex-direction:column; align-items:center; gap:8px;
 }
-.search-bar input::placeholder{ color:var(--muted); }
-.search-bar input:focus{ outline:none; border-color:var(--accent); }
+.search-box{
+  position:relative; width:100%; max-width:620px;
+  display:flex; align-items:center;
+  background:linear-gradient(180deg, var(--panel-2), var(--panel));
+  border:1px solid var(--line); border-radius:999px;
+  transition:border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.search-box:hover{ border-color:#3b3e30; }
+.search-box:focus-within{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(207,232,30,0.12), 0 8px 24px rgba(0,0,0,0.35);
+}
+.search-icon{
+  flex-shrink:0; width:18px; height:18px; margin-left:18px; color:var(--muted);
+  transition:color .2s ease;
+}
+.search-box:focus-within .search-icon{ color:var(--accent); }
+.search-box input{
+  flex:1; min-width:0; background:transparent; border:none; color:var(--text);
+  padding:14px 12px; font-size:15px; font-family:inherit; letter-spacing:0.01em;
+}
+.search-box input::placeholder{ color:var(--muted); }
+.search-box input:focus{ outline:none; }
+.search-box input::-webkit-search-cancel-button{ -webkit-appearance:none; }
+.search-clear{
+  display:none; flex-shrink:0; margin-right:8px; width:32px; height:32px; border-radius:50%;
+  border:none; background:var(--line); color:var(--text); font-size:16px; line-height:1;
+  cursor:pointer; transition:background .15s ease, color .15s ease;
+}
+.search-clear:hover{ background:var(--accent); color:var(--btn-text); }
+.search-box.has-text .search-clear{ display:block; }
+.search-info{ font-size:12px; color:var(--muted); letter-spacing:0.04em; text-align:center; }
+.search-info:empty{ display:none; }
+.search-info strong{ color:var(--accent); font-weight:600; }
+.cat-bar.searching .tab.active{ color:var(--muted); border-bottom-color:transparent; }
+body.is-searching .hero{ display:none; }
+@media (max-width:600px){
+  .search-bar{ padding:10px 14px; }
+  .search-box input{ padding:12px 10px; font-size:16px; }
+  .search-icon{ margin-left:14px; }
+}
 .no-results{
   grid-column:1/-1; text-align:center; padding:60px 20px; color:var(--muted); font-size:14px;
   background:var(--bg);
@@ -420,7 +457,12 @@ footer{text-align:center; padding:30px; color:var(--muted); font-size:12px; bord
   <button class="cat-arrow cat-arrow-right" onclick="scrollNav(1)" aria-label="Ver más categorías">›</button>
 </div>
 <div class="search-bar">
-  <input type="text" id="searchInput" placeholder="Buscar producto..." oninput="setSearch(this.value)">
+  <div class="search-box" id="searchBox">
+    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line></svg>
+    <input type="search" id="searchInput" placeholder="Busca por marca o modelo… (ej: Nike, Jordan 4, Corteiz)" autocomplete="off" oninput="setSearch(this.value)" onkeydown="if(event.key==='Escape') clearSearch()">
+    <button class="search-clear" type="button" onclick="clearSearch()" aria-label="Borrar búsqueda">✕</button>
+  </div>
+  <div class="search-info" id="searchInfo"></div>
 </div>
 </div>
 
@@ -1020,7 +1062,7 @@ const PRODUCTS = [
     name: "Gorra Alo Yoga (Mas Colores Disponibles)",
     category: "Accesorios",
     price: 23.0,
-    images: ["images/0028-gorra-alo-yoga-mas-colores-disponibles.jpg"],
+    images: ["images/0028-gorra-alo-yoga-mas-colores-disponibles.jpg", "images/gorra-alo-yoga-mas-colores-disponibles-real-1.jpg", "images/gorra-alo-yoga-mas-colores-disponibles-real-2.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -1028,7 +1070,7 @@ const PRODUCTS = [
     name: "Gafas De Sol Maybach (Mas Colores Disponibles)",
     category: "Accesorios",
     price: 27.0,
-    images: ["images/0029-gafas-de-sol-maybach-mas-colores-disponibles.jpg"],
+    images: ["images/0029-gafas-de-sol-maybach-mas-colores-disponibles.jpg", "images/gafas-de-sol-maybach-mas-colores-disponibles-real-1.jpg", "images/gafas-de-sol-maybach-mas-colores-disponibles-real-2.jpg", "images/gafas-de-sol-maybach-mas-colores-disponibles-real-3.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2444,7 +2486,7 @@ const PRODUCTS = [
     name: "Cortavientos Brasil Gore Tex",
     category: "Chaquetas",
     price: 45.0,
-    images: ["images/0651-cortavientos-brasil-gore-tex.jpg"],
+    images: ["images/0651-cortavientos-brasil-gore-tex.jpg", "images/cortavientos-brasil-gore-tex-real-1.jpg", "images/cortavientos-brasil-gore-tex-real-2.jpg", "images/cortavientos-brasil-gore-tex-real-3.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2452,7 +2494,7 @@ const PRODUCTS = [
     name: "Cortavientos Nocta",
     category: "Chaquetas",
     price: 45.0,
-    images: ["images/0652-cortavientos-nocta.jpg"],
+    images: ["images/0652-cortavientos-nocta.jpg", "images/cortavientos-nocta-real-1.jpg", "images/cortavientos-nocta-real-2.jpg", "images/cortavientos-nocta-real-3.jpg", "images/cortavientos-nocta-real-4.jpg", "images/cortavientos-nocta-real-5.jpg", "images/cortavientos-nocta-real-6.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2476,7 +2518,7 @@ const PRODUCTS = [
     name: "Ralph Lauren Chaqueta",
     category: "Chaquetas",
     price: 45.0,
-    images: ["images/0655-ralph-lauren-chaqueta.jpg", "images/0656-ralph-lauren-chaqueta.jpg", "images/0657-ralph-lauren-chaqueta.jpg", "images/0658-ralph-lauren-chaqueta.jpg", "images/0659-ralph-lauren-chaqueta.jpg"],
+    images: ["images/0655-ralph-lauren-chaqueta.jpg", "images/0656-ralph-lauren-chaqueta.jpg", "images/0657-ralph-lauren-chaqueta.jpg", "images/0658-ralph-lauren-chaqueta.jpg", "images/0659-ralph-lauren-chaqueta.jpg", "images/ralph-lauren-chaqueta-real-1.jpg", "images/ralph-lauren-chaqueta-real-2.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2492,7 +2534,7 @@ const PRODUCTS = [
     name: "Syna World Cortavientos",
     category: "Chaquetas",
     price: 45.0,
-    images: ["images/0666-syna-world-cortavientos.jpg", "images/0667-syna-world-cortavientos.jpg", "images/0668-syna-world-cortavientos.jpg", "images/0669-syna-world-cortavientos.jpg"],
+    images: ["images/0666-syna-world-cortavientos.jpg", "images/0667-syna-world-cortavientos.jpg", "images/0668-syna-world-cortavientos.jpg", "images/0669-syna-world-cortavientos.jpg", "images/syna-world-cortavientos-real-1.jpg", "images/syna-world-cortavientos-real-2.jpg", "images/syna-world-cortavientos-real-3.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2500,7 +2542,7 @@ const PRODUCTS = [
     name: "Louis Vuitton Chaqueta",
     category: "Chaquetas",
     price: 52.0,
-    images: ["images/0670-louis-vuitton-chaqueta.jpg", "images/0671-louis-vuitton-chaqueta.jpg", "images/0672-louis-vuitton-chaqueta.jpg"],
+    images: ["images/0670-louis-vuitton-chaqueta.jpg", "images/0671-louis-vuitton-chaqueta.jpg", "images/0672-louis-vuitton-chaqueta.jpg", "images/louis-vuitton-chaqueta-real-1.jpg", "images/louis-vuitton-chaqueta-real-2.jpg", "images/louis-vuitton-chaqueta-real-3.jpg", "images/louis-vuitton-chaqueta-real-4.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2620,7 +2662,7 @@ const PRODUCTS = [
     name: "Nike Nocta Tech Fleece Chaqueta",
     category: "Chaquetas",
     price: 45.0,
-    images: ["images/0718-nike-nocta-tech-fleece-chaqueta.jpg", "images/0719-nike-nocta-tech-fleece-chaqueta.jpg", "images/0720-nike-nocta-tech-fleece-chaqueta.jpg"],
+    images: ["images/0718-nike-nocta-tech-fleece-chaqueta.jpg", "images/0719-nike-nocta-tech-fleece-chaqueta.jpg", "images/0720-nike-nocta-tech-fleece-chaqueta.jpg", "images/nike-nocta-tech-fleece-chaqueta-real-1.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2660,7 +2702,7 @@ const PRODUCTS = [
     name: "Tnf Cortavientos",
     category: "Chaquetas",
     price: 45.0,
-    images: ["images/0733-tnf-cortavientos.jpg"],
+    images: ["images/0733-tnf-cortavientos.jpg", "images/tnf-cortavientos-real-1.jpg", "images/tnf-cortavientos-real-2.jpg", "images/tnf-cortavientos-real-3.jpg", "images/tnf-cortavientos-real-4.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -3124,7 +3166,7 @@ const PRODUCTS = [
     name: "Bolso Coach",
     category: "Accesorios",
     price: 42.0,
-    images: ["images/0900-bolso-coach.jpg"],
+    images: ["images/0900-bolso-coach.jpg", "images/bolso-coach-real-1.jpg", "images/bolso-coach-real-2.jpg", "images/bolso-coach-real-3.jpg", "images/bolso-coach-real-4.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -3140,7 +3182,7 @@ const PRODUCTS = [
     name: "Trapstar Reflectante",
     category: "Accesorios",
     price: 27.0,
-    images: ["images/0904-trapstar-reflectante.jpg", "images/0905-trapstar-reflectante.jpg"],
+    images: ["images/0904-trapstar-reflectante.jpg", "images/0905-trapstar-reflectante.jpg", "images/trapstar-reflectante-real-1.jpg", "images/trapstar-reflectante-real-2.jpg", "images/trapstar-reflectante-real-3.jpg", "images/trapstar-reflectante-real-4.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -3196,7 +3238,7 @@ const PRODUCTS = [
     name: "Ysl Bolso",
     category: "Accesorios",
     price: 40.0,
-    images: ["images/0927-ysl-bolso.jpg", "images/0928-ysl-bolso.jpg", "images/0929-ysl-bolso.jpg"],
+    images: ["images/0927-ysl-bolso.jpg", "images/0928-ysl-bolso.jpg", "images/0929-ysl-bolso.jpg", "images/ysl-bolso-real-1.jpg", "images/ysl-bolso-real-2.jpg", "images/ysl-bolso-real-3.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -3228,7 +3270,7 @@ const PRODUCTS = [
     name: "Gorra Hugo Boss",
     category: "Accesorios",
     price: 24.0,
-    images: ["images/0938-gorra-hugo-boss.jpg", "images/0939-gorra-hugo-boss.jpg"],
+    images: ["images/0938-gorra-hugo-boss.jpg", "images/0939-gorra-hugo-boss.jpg", "images/gorra-hugo-boss-real-1.jpg", "images/gorra-hugo-boss-real-2.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -3236,7 +3278,7 @@ const PRODUCTS = [
     name: "Ralph Lauren",
     category: "Accesorios",
     price: 24.0,
-    images: ["images/0940-ralph-lauren.jpg", "images/0941-ralph-lauren.jpg", "images/0942-ralph-lauren.jpg", "images/0943-ralph-lauren.jpg", "images/0944-ralph-lauren.jpg", "images/0945-ralph-lauren.jpg", "images/0946-ralph-lauren.jpg", "images/0947-ralph-lauren.jpg"],
+    images: ["images/0940-ralph-lauren.jpg", "images/0941-ralph-lauren.jpg", "images/0942-ralph-lauren.jpg", "images/0943-ralph-lauren.jpg", "images/0944-ralph-lauren.jpg", "images/0945-ralph-lauren.jpg", "images/0946-ralph-lauren.jpg", "images/0947-ralph-lauren.jpg", "images/ralph-lauren-real-1.jpg", "images/ralph-lauren-real-2.jpg", "images/ralph-lauren-real-3.jpg", "images/ralph-lauren-real-4.jpg", "images/ralph-lauren-real-5.jpg", "images/ralph-lauren-real-6.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -3252,7 +3294,7 @@ const PRODUCTS = [
     name: "Chrome Hearts",
     category: "Accesorios",
     price: 24.0,
-    images: ["images/0955-chrome-hearts.jpg", "images/0956-chrome-hearts.jpg", "images/0957-chrome-hearts.jpg", "images/0958-chrome-hearts.jpg", "images/0959-chrome-hearts.jpg", "images/0960-chrome-hearts.jpg", "images/0961-chrome-hearts.jpg", "images/0962-chrome-hearts.jpg", "images/0963-chrome-hearts.jpg", "images/0964-chrome-hearts.jpg", "images/0965-chrome-hearts.jpg", "images/0966-chrome-hearts.jpg"],
+    images: ["images/0955-chrome-hearts.jpg", "images/0956-chrome-hearts.jpg", "images/0957-chrome-hearts.jpg", "images/0958-chrome-hearts.jpg", "images/0959-chrome-hearts.jpg", "images/0960-chrome-hearts.jpg", "images/0961-chrome-hearts.jpg", "images/0962-chrome-hearts.jpg", "images/0963-chrome-hearts.jpg", "images/0964-chrome-hearts.jpg", "images/0965-chrome-hearts.jpg", "images/0966-chrome-hearts.jpg", "images/chrome-hearts-real-1.jpg", "images/chrome-hearts-real-2.jpg", "images/chrome-hearts-real-3.jpg", "images/chrome-hearts-real-4.jpg", "images/chrome-hearts-real-5.jpg", "images/chrome-hearts-real-6.jpg", "images/chrome-hearts-real-7.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -3276,7 +3318,7 @@ const PRODUCTS = [
     name: "Corteiz Ski Mask (Mas Modelos Disponibles)",
     category: "Accesorios",
     price: 17.0,
-    images: ["images/0979-corteiz-ski-mask-mas-modelos-disponibles.jpg", "images/0980-corteiz-ski-mask-mas-modelos-disponibles.jpg"],
+    images: ["images/0979-corteiz-ski-mask-mas-modelos-disponibles.jpg", "images/0980-corteiz-ski-mask-mas-modelos-disponibles.jpg", "images/corteiz-ski-mask-mas-modelos-disponibles-real-1.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -3375,6 +3417,7 @@ const PRODUCT_MODELS = {
   63: [["Negra", "images/0005-camiseta-cold-culture-mas-colores-disponibles.jpg"], ["Rosa", "images/0006-camiseta-cold-culture-mas-colores-disponibles.jpg"]],
   65: [["Negra estrellas", "images/0007-camiseta-cold-culture.jpg"], ["Blanca uvas", "images/0008-camiseta-cold-culture.jpg"], ["Blanca ribete negro", "images/0009-camiseta-cold-culture.jpg"], ["Azul claro", "images/0013-camiseta-cold-culture.jpg"], ["Negra perros", "images/0014-camiseta-cold-culture.jpg"], ["Negra corazón", "images/0015-camiseta-cold-culture.jpg"], ["Negra logo estrellas", "images/0016-camiseta-cold-culture.jpg"]],
   69: [["Coche", "images/0011-camiseta-nude-project.jpg"], ["Cerezas", "images/0012-camiseta-nude-project.jpg"]],
+  85: [["Negra logo negro", "images/0028-gorra-alo-yoga-mas-colores-disponibles.jpg"], ["Negra logo blanco", "images/gorra-alo-yoga-mas-colores-disponibles-real-1.jpg", "images/gorra-alo-yoga-mas-colores-disponibles-real-2.jpg"]],
   89: [["Azul claro", "images/0032-nike-mind-001-nocta.jpg", "images/real-nike-mind-001-nocta-01.jpg", "images/real-nike-mind-001-nocta-02.jpg", "images/real-nike-mind-001-nocta-03.jpg", "images/real-nike-mind-001-nocta-04.jpg"], ["Negras", "images/0033-nike-mind-001-nocta.jpg", "images/real-nike-mind-001-nocta-05.jpg", "images/real-nike-mind-001-nocta-06.jpg", "images/real-nike-mind-001-nocta-07.jpg"]],
   91: [["Azul marino", "images/0034-nike-mind-001.jpg", "images/real-nike-mind-001-01.jpg", "images/real-nike-mind-001-02.jpg", "images/real-nike-mind-001-03.jpg"], ["Verdes", "images/0035-nike-mind-001.jpg"], ["Negras", "images/0036-nike-mind-001.jpg"]],
   95: [["Verde agua", "images/0038-banador-lacoste.jpg"], ["Gris oscuro", "images/0039-banador-lacoste.jpg"], ["Azul", "images/0040-banador-lacoste.jpg"]],
@@ -3457,10 +3500,12 @@ const PRODUCT_MODELS = {
   675: [["Negro calavera", "images/0627-hellstar-shorts-mas-modelos-disponibles.jpg"], ["Gris llamas blancas", "images/0628-hellstar-shorts-mas-modelos-disponibles.jpg"], ["Gris llamas negras", "images/0629-hellstar-shorts-mas-modelos-disponibles.jpg"], ["Azul claro", "images/0630-hellstar-shorts-mas-modelos-disponibles.jpg"], ["Negro lateral", "images/0631-hellstar-shorts-mas-modelos-disponibles.jpg"], ["Gris llamas rosas", "images/0632-hellstar-shorts-mas-modelos-disponibles.jpg"], ["Negro franja blanca", "images/0633-hellstar-shorts-mas-modelos-disponibles.jpg"]],
   682: [["Negro", "images/0634-denim-tears-shorts-mas-colores-disponibles.jpg"], ["Gris", "images/0635-denim-tears-shorts-mas-colores-disponibles.jpg"], ["Verde", "images/0636-denim-tears-shorts-mas-colores-disponibles.jpg"], ["Morado", "images/0637-denim-tears-shorts-mas-colores-disponibles.jpg"], ["Rojo", "images/0638-denim-tears-shorts-mas-colores-disponibles.jpg"]],
   687: [["Negro ribete blanco", "images/0639-rhude-attack-shorts.jpg"], ["Rojo", "images/0640-rhude-attack-shorts.jpg"], ["Verde", "images/0641-rhude-attack-shorts.jpg"], ["Negro", "images/0642-rhude-attack-shorts.jpg"], ["Azul", "images/0643-rhude-attack-shorts.jpg"], ["Rojo cremalleras", "images/0644-rhude-attack-shorts.jpg"], ["Azul marino", "images/0645-rhude-attack-shorts.jpg"], ["Verde azulado", "images/0646-rhude-attack-shorts.jpg"], ["Azul claro y blanco", "images/0647-rhude-attack-shorts.jpg"], ["Verde y blanco", "images/0648-rhude-attack-shorts.jpg"], ["Azul y gris", "images/0649-rhude-attack-shorts.jpg"]],
-  703: [["Bomber negra", "images/0655-ralph-lauren-chaqueta.jpg"], ["Bomber azul marino", "images/0656-ralph-lauren-chaqueta.jpg"], ["Sudadera negra", "images/0657-ralph-lauren-chaqueta.jpg"], ["Sudadera blanca", "images/0658-ralph-lauren-chaqueta.jpg"], ["Sudadera gris", "images/0659-ralph-lauren-chaqueta.jpg"]],
+  699: [["Negro", "images/cortavientos-brasil-gore-tex-real-1.jpg"], ["Blanco", "images/cortavientos-brasil-gore-tex-real-2.jpg", "images/cortavientos-brasil-gore-tex-real-3.jpg"]],
+  700: [["Negro y gris", "images/cortavientos-nocta-real-1.jpg", "images/cortavientos-nocta-real-2.jpg"], ["Negro y amarillo", "images/cortavientos-nocta-real-3.jpg", "images/cortavientos-nocta-real-4.jpg"], ["Morado", "images/cortavientos-nocta-real-5.jpg", "images/cortavientos-nocta-real-6.jpg"]],
+  703: [["Bomber negra", "images/0655-ralph-lauren-chaqueta.jpg"], ["Bomber azul marino", "images/0656-ralph-lauren-chaqueta.jpg"], ["Sudadera negra", "images/0657-ralph-lauren-chaqueta.jpg"], ["Sudadera blanca", "images/0658-ralph-lauren-chaqueta.jpg"], ["Sudadera gris", "images/0659-ralph-lauren-chaqueta.jpg"], ["Bomber gris oscuro", "images/ralph-lauren-chaqueta-real-1.jpg"], ["Bomber beige", "images/ralph-lauren-chaqueta-real-2.jpg"]],
   708: [["Gris logo rosa", "images/0660-syna-world-sudadera.jpg"], ["Azul", "images/0661-syna-world-sudadera.jpg"], ["Negra logo verde", "images/0662-syna-world-sudadera.jpg"], ["Marrón y crema", "images/0663-syna-world-sudadera.jpg"], ["Gris", "images/0664-syna-world-sudadera.jpg"], ["Negra y gris", "images/0665-syna-world-sudadera.jpg"]],
-  714: [["Negro y blanco", "images/0666-syna-world-cortavientos.jpg"], ["Negro y rojo", "images/0667-syna-world-cortavientos.jpg"], ["Azul y amarillo", "images/0668-syna-world-cortavientos.jpg"], ["Blanco y azul", "images/0669-syna-world-cortavientos.jpg"]],
-  718: [["Morada", "images/0670-louis-vuitton-chaqueta.jpg"], ["Verde", "images/0671-louis-vuitton-chaqueta.jpg"], ["Beige", "images/0672-louis-vuitton-chaqueta.jpg"]],
+  714: [["Negro y blanco", "images/0666-syna-world-cortavientos.jpg"], ["Negro y rojo", "images/0667-syna-world-cortavientos.jpg"], ["Azul y amarillo", "images/0668-syna-world-cortavientos.jpg", "images/syna-world-cortavientos-real-1.jpg"], ["Blanco y azul", "images/0669-syna-world-cortavientos.jpg", "images/syna-world-cortavientos-real-2.jpg", "images/syna-world-cortavientos-real-3.jpg"]],
+  718: [["Morada", "images/0670-louis-vuitton-chaqueta.jpg"], ["Verde", "images/0671-louis-vuitton-chaqueta.jpg", "images/louis-vuitton-chaqueta-real-1.jpg", "images/louis-vuitton-chaqueta-real-2.jpg"], ["Beige", "images/0672-louis-vuitton-chaqueta.jpg"], ["Negra", "images/louis-vuitton-chaqueta-real-3.jpg", "images/louis-vuitton-chaqueta-real-4.jpg"]],
   722: [["Negra", "images/0674-hellstar-sudadera.jpg"], ["Roja", "images/0675-hellstar-sudadera.jpg"], ["Rosa", "images/0676-hellstar-sudadera.jpg"], ["Roja calavera", "images/0677-hellstar-sudadera.jpg"], ["Naranja", "images/0678-hellstar-sudadera.jpg"], ["Azul turquesa cremallera", "images/0679-hellstar-sudadera.jpg"], ["Negra rosa", "images/0680-hellstar-sudadera.jpg"], ["Azul logo blanco", "images/0681-hellstar-sudadera.jpg"], ["Azul Hellstar", "images/0682-hellstar-sudadera.jpg"]],
   731: [["Azul", "images/0683-adidas-tang-chaqueta.jpg"], ["Blanca", "images/0684-adidas-tang-chaqueta.jpg"]],
   733: [["Azul marino", "images/0685-polo-ralph-lauren-jersey.jpg"], ["Gris", "images/0686-polo-ralph-lauren-jersey.jpg"], ["Crema", "images/0687-polo-ralph-lauren-jersey.jpg"]],
@@ -3472,10 +3517,11 @@ const PRODUCT_MODELS = {
   756: [["Azul oscuro", "images/0708-lacoste-sudadera-mas-colores-disponibles.jpg"], ["Gris", "images/0709-lacoste-sudadera-mas-colores-disponibles.jpg"], ["Azul", "images/0710-lacoste-sudadera-mas-colores-disponibles.jpg"]],
   759: [["Negra", "images/0711-nike-chaqueta-lana.jpg"], ["Blanca", "images/0712-nike-chaqueta-lana.jpg"], ["Azul marino y rosa", "images/0713-nike-chaqueta-lana.jpg"]],
   763: [["Azul claro", "images/0715-nike-nocta-tech-fleece-jersey.jpg"], ["Verde", "images/0716-nike-nocta-tech-fleece-jersey.jpg"], ["Negro", "images/0717-nike-nocta-tech-fleece-jersey.jpg"]],
-  766: [["Azul claro", "images/0718-nike-nocta-tech-fleece-chaqueta.jpg"], ["Negra", "images/0719-nike-nocta-tech-fleece-chaqueta.jpg"], ["Verde", "images/0720-nike-nocta-tech-fleece-chaqueta.jpg"]],
+  766: [["Azul claro", "images/0718-nike-nocta-tech-fleece-chaqueta.jpg", "images/nike-nocta-tech-fleece-chaqueta-real-1.jpg"], ["Negra", "images/0719-nike-nocta-tech-fleece-chaqueta.jpg"], ["Verde", "images/0720-nike-nocta-tech-fleece-chaqueta.jpg"]],
   769: [["Gris", "images/0721-stussy-x-nike-fleece-sudadera.jpg"], ["Negra", "images/0722-stussy-x-nike-fleece-sudadera.jpg"]],
   771: [["Negra logo", "images/0723-stussy-sudadera.jpg", "images/0798-stussy-sudadera.jpg", "images/0799-stussy-sudadera.jpg"], ["Gris logo", "images/0724-stussy-sudadera.jpg"], ["Blanca dados rosas", "images/0725-stussy-sudadera.jpg"], ["Negra dados blancos", "images/0726-stussy-sudadera.jpg"], ["Negra bola 8", "images/0727-stussy-sudadera.jpg"], ["Negra dados naranjas", "images/0728-stussy-sudadera.jpg"], ["Gris dados rojos", "images/0729-stussy-sudadera.jpg"], ["Negra STÜSSY dorado", "images/0792-stussy-sudadera.jpg"], ["Gris STÜSSY rojo", "images/0793-stussy-sudadera.jpg"], ["Azul marino", "images/0800-stussy-sudadera.jpg"]],
   778: [["Azul", "images/0730-stussy-chaqueta.jpg"], ["Negra", "images/0731-stussy-chaqueta.jpg"]],
+  781: [["Negro", "images/0733-tnf-cortavientos.jpg", "images/tnf-cortavientos-real-3.jpg", "images/tnf-cortavientos-real-4.jpg"], ["Negro y blanco", "images/tnf-cortavientos-real-1.jpg", "images/tnf-cortavientos-real-2.jpg"]],
   782: [["Negra", "images/0734-under-armour-chaqueta.jpg"], ["Gris oscuro", "images/0735-under-armour-chaqueta.jpg"], ["Gris claro", "images/0736-under-armour-chaqueta.jpg"]],
   785: [["Negra", "images/0737-carhatt-sudadera.jpg"], ["Gris oscuro", "images/0738-carhatt-sudadera.jpg"], ["Gris claro", "images/0739-carhatt-sudadera.jpg"], ["Crema", "images/0740-carhatt-sudadera.jpg"], ["Marrón", "images/0741-carhatt-sudadera.jpg"], ["Azul", "images/0742-carhatt-sudadera.jpg"], ["Blanca sin capucha", "images/0746-carhatt-sudadera.jpg"], ["Gris sin capucha", "images/0747-carhatt-sudadera.jpg"], ["Negra sin capucha", "images/0748-carhatt-sudadera.jpg"], ["Azul claro sin capucha", "images/0749-carhatt-sudadera.jpg"]],
   791: [["Negro", "images/0743-carhatt-wip-half-zip.jpg"], ["Azul marino", "images/0744-carhatt-wip-half-zip.jpg"], ["Gris claro", "images/0745-carhatt-wip-half-zip.jpg"]],
@@ -3505,23 +3551,24 @@ const PRODUCT_MODELS = {
   933: [["Negra", "images/0885-the-north-face-gore-tex.jpg"], ["Blanca", "images/0886-the-north-face-gore-tex.jpg"], ["Verde oliva", "images/0887-the-north-face-gore-tex.jpg"]],
   936: [["Azul degradado", "images/0888-trapstar-chaqueton.jpg"], ["Azul", "images/0889-trapstar-chaqueton.jpg"], ["Negro", "images/0890-trapstar-chaqueton.jpg"], ["Azul claro", "images/0891-trapstar-chaqueton.jpg"]],
   941: [["Gris", "images/0893-canada-goose-chaqueton.jpg"], ["Blanco", "images/0894-canada-goose-chaqueton.jpg"]],
+  943: [["Rosa", "images/0900-bolso-coach.jpg", "images/bolso-coach-real-1.jpg"], ["Negro", "images/bolso-coach-real-2.jpg"], ["Blanco", "images/bolso-coach-real-3.jpg"], ["Azul", "images/bolso-coach-real-4.jpg"]],
   944: [["Negro", "images/0901-louis-vuitton.jpg"], ["Blanco", "images/0902-louis-vuitton.jpg"], ["Azul", "images/0903-louis-vuitton.jpg"]],
-  947: [["Negro", "images/0904-trapstar-reflectante.jpg"], ["Azul", "images/0905-trapstar-reflectante.jpg"]],
+  947: [["Negro", "images/0904-trapstar-reflectante.jpg", "images/trapstar-reflectante-real-1.jpg", "images/trapstar-reflectante-real-3.jpg"], ["Azul", "images/0905-trapstar-reflectante.jpg", "images/trapstar-reflectante-real-4.jpg"], ["Negro logo azul", "images/trapstar-reflectante-real-2.jpg"]],
   949: [["Azul", "images/0906-supreme.jpg"], ["Rojo", "images/0907-supreme.jpg"], ["Negro", "images/0908-supreme.jpg"], ["Beige", "images/0909-supreme.jpg"]],
   953: [["Gris estampado", "images/0910-lacoste.jpg"], ["Azul marino estampado", "images/0911-lacoste.jpg"], ["Negro liso", "images/0912-lacoste.jpg"], ["Azul marino liso", "images/0913-lacoste.jpg"], ["Verde", "images/0914-lacoste.jpg"], ["Negro LACOSTE", "images/0915-lacoste.jpg"], ["Negro LACOSTE vertical", "images/0916-lacoste.jpg"]],
   960: [["Negro", "images/0917-lacoste-bolso.jpg"], ["Blanco", "images/0918-lacoste-bolso.jpg"]],
   962: [["Azul", "images/0919-goyard-disponible-en-mas-colores.jpg"], ["Blanco", "images/0920-goyard-disponible-en-mas-colores.jpg"], ["Verde", "images/0921-goyard-disponible-en-mas-colores.jpg"], ["Gris", "images/0922-goyard-disponible-en-mas-colores.jpg"]],
   967: [["Negro", "images/0924-prada-bolso.jpg"], ["Rosa", "images/0925-prada-bolso.jpg"], ["Azul claro", "images/0926-prada-bolso.jpg"]],
-  970: [["Negro", "images/0927-ysl-bolso.jpg"], ["Verde", "images/0928-ysl-bolso.jpg"], ["Rosa", "images/0929-ysl-bolso.jpg"]],
+  970: [["Negro logo negro", "images/0927-ysl-bolso.jpg"], ["Verde", "images/0928-ysl-bolso.jpg"], ["Rosa", "images/0929-ysl-bolso.jpg"], ["Negro logo dorado", "images/ysl-bolso-real-1.jpg", "images/ysl-bolso-real-2.jpg"], ["Negro logo plateado", "images/ysl-bolso-real-3.jpg"]],
   974: [["Negra", "images/0931-the-north-face-mochila.jpg"], ["Beige", "images/0932-the-north-face-mochila.jpg"], ["Crema", "images/0933-the-north-face-mochila.jpg"], ["Azul marino", "images/0934-the-north-face-mochila.jpg"], ["Gris", "images/0935-the-north-face-mochila.jpg"]],
   979: [["Azul claro", "images/0936-gorra-ralph-lauren.jpg"], ["Negra", "images/0937-gorra-ralph-lauren.jpg"]],
-  981: [["Negra Hugo", "images/0938-gorra-hugo-boss.jpg"], ["Negra BOSS rejilla", "images/0939-gorra-hugo-boss.jpg"]],
-  983: [["Negra", "images/0940-ralph-lauren.jpg"], ["Beige", "images/0941-ralph-lauren.jpg"], ["Blanca", "images/0942-ralph-lauren.jpg"], ["Roja", "images/0943-ralph-lauren.jpg"], ["Azul", "images/0944-ralph-lauren.jpg"], ["Marrón", "images/0945-ralph-lauren.jpg"], ["Crema", "images/0946-ralph-lauren.jpg"], ["Rosa", "images/0947-ralph-lauren.jpg"]],
+  981: [["Negra Hugo", "images/0938-gorra-hugo-boss.jpg"], ["Negra BOSS rejilla", "images/0939-gorra-hugo-boss.jpg"], ["Negra logo metálico", "images/gorra-hugo-boss-real-1.jpg"], ["Negra BOSS dorado", "images/gorra-hugo-boss-real-2.jpg"]],
+  983: [["Negra", "images/0940-ralph-lauren.jpg"], ["Beige", "images/0941-ralph-lauren.jpg", "images/ralph-lauren-real-3.jpg"], ["Blanca", "images/0942-ralph-lauren.jpg"], ["Roja", "images/0943-ralph-lauren.jpg", "images/ralph-lauren-real-2.jpg"], ["Azul", "images/0944-ralph-lauren.jpg"], ["Marrón", "images/0945-ralph-lauren.jpg", "images/ralph-lauren-real-1.jpg", "images/ralph-lauren-real-5.jpg"], ["Crema", "images/0946-ralph-lauren.jpg"], ["Rosa", "images/0947-ralph-lauren.jpg"], ["Azul marino", "images/ralph-lauren-real-4.jpg", "images/ralph-lauren-real-6.jpg"]],
   991: [["Marrón", "images/0948-corteiz.jpg"], ["Negra", "images/0949-corteiz.jpg"], ["Blanca", "images/0950-corteiz.jpg"], ["Verde", "images/0951-corteiz.jpg"], ["Azul claro", "images/0952-corteiz.jpg"], ["Gris", "images/0953-corteiz.jpg"], ["Rosa", "images/0954-corteiz.jpg"]],
-  998: [["Blanca y negra", "images/0955-chrome-hearts.jpg"], ["Negra", "images/0956-chrome-hearts.jpg"], ["Blanca, granate y azul", "images/0957-chrome-hearts.jpg"], ["Rosa", "images/0958-chrome-hearts.jpg"], ["Negra labios", "images/0959-chrome-hearts.jpg"], ["Negra cruz blanca", "images/0960-chrome-hearts.jpg"], ["Fucsia", "images/0961-chrome-hearts.jpg"], ["Azul y blanca", "images/0962-chrome-hearts.jpg"], ["Negra cruces colores", "images/0963-chrome-hearts.jpg"], ["Roja", "images/0964-chrome-hearts.jpg"], ["Morada", "images/0965-chrome-hearts.jpg"], ["Verde", "images/0966-chrome-hearts.jpg"]],
+  998: [["Blanca y negra", "images/0955-chrome-hearts.jpg"], ["Negra", "images/0956-chrome-hearts.jpg", "images/chrome-hearts-real-7.jpg"], ["Blanca, granate y azul", "images/0957-chrome-hearts.jpg"], ["Rosa", "images/0958-chrome-hearts.jpg", "images/chrome-hearts-real-1.jpg"], ["Negra labios", "images/0959-chrome-hearts.jpg"], ["Negra cruz blanca", "images/0960-chrome-hearts.jpg"], ["Fucsia", "images/0961-chrome-hearts.jpg"], ["Azul y blanca", "images/0962-chrome-hearts.jpg", "images/chrome-hearts-real-3.jpg"], ["Negra cruces colores", "images/0963-chrome-hearts.jpg", "images/chrome-hearts-real-4.jpg"], ["Roja", "images/0964-chrome-hearts.jpg"], ["Morada", "images/0965-chrome-hearts.jpg"], ["Verde", "images/0966-chrome-hearts.jpg"], ["Camuflaje", "images/chrome-hearts-real-2.jpg"], ["Negra CH blanco", "images/chrome-hearts-real-5.jpg", "images/chrome-hearts-real-6.jpg"]],
   1010: [["Negra estrellas negras", "images/0967-amiri-gorra-150-modelos-diferentes.jpg"], ["Negra rosa", "images/0968-amiri-gorra-150-modelos-diferentes.jpg"], ["Negra Arts District", "images/0969-amiri-gorra-150-modelos-diferentes.jpg"], ["Negra estrellas blancas", "images/0970-amiri-gorra-150-modelos-diferentes.jpg"], ["Azul logo blanco", "images/0971-amiri-gorra-150-modelos-diferentes.jpg"], ["Negra logo rosa", "images/0972-amiri-gorra-150-modelos-diferentes.jpg"], ["Negra logo azul", "images/0973-amiri-gorra-150-modelos-diferentes.jpg"], ["Azul claro brillantes", "images/0974-amiri-gorra-150-modelos-diferentes.jpg"]],
   1018: [["White Sox", "images/0975-new-era-gorra-mas-modelos-disponibles.jpg"], ["Dodgers azul claro", "images/0976-new-era-gorra-mas-modelos-disponibles.jpg"], ["San Diego rosa", "images/0977-new-era-gorra-mas-modelos-disponibles.jpg"], ["Dodgers azul", "images/0978-new-era-gorra-mas-modelos-disponibles.jpg"]],
-  1022: [["Negra", "images/0979-corteiz-ski-mask-mas-modelos-disponibles.jpg"], ["Blanca", "images/0980-corteiz-ski-mask-mas-modelos-disponibles.jpg"]],
+  1022: [["Negra", "images/0979-corteiz-ski-mask-mas-modelos-disponibles.jpg", "images/corteiz-ski-mask-mas-modelos-disponibles-real-1.jpg"], ["Blanca", "images/0980-corteiz-ski-mask-mas-modelos-disponibles.jpg"]],
   1024: [["Negro", "images/0981-gafas-de-sol-rayban.jpg"], ["Naranja espejo", "images/0982-gafas-de-sol-rayban.jpg"], ["Azul espejo", "images/0983-gafas-de-sol-rayban.jpg"], ["Carey", "images/0984-gafas-de-sol-rayban.jpg"]],
   1028: [["Negras", "images/0985-off-white-gafas-de-sol.jpg"], ["Blancas", "images/0986-off-white-gafas-de-sol.jpg"]],
   1030: [["Negras", "images/0987-palm-angels-gafas-de-sol.jpg"], ["Rojas", "images/0988-palm-angels-gafas-de-sol.jpg"], ["Moradas", "images/0989-palm-angels-gafas-de-sol.jpg"], ["Cristal amarillo", "images/0990-palm-angels-gafas-de-sol.jpg"], ["Verdes", "images/0991-palm-angels-gafas-de-sol.jpg"], ["Cristal azul", "images/0992-palm-angels-gafas-de-sol.jpg"], ["Carey", "images/0993-palm-angels-gafas-de-sol.jpg"], ["Transparentes", "images/0994-palm-angels-gafas-de-sol.jpg"], ["Blancas", "images/0995-palm-angels-gafas-de-sol.jpg"]],
@@ -3538,9 +3585,49 @@ function normalizeText(s){
   return s.toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
 }
 
+/* Palabras que también cuentan como una marca al buscar.
+   Ej: si buscan "nike", también salen Air Force, Jordan, Dunk...
+   Puedes añadir más: "marca": ["palabra1", "palabra2"] */
+const SEARCH_ALIASES = {
+  "nike": ["air force", "af1", "air max", "jordan", "dunk", "tech fleece", "nocta", "shox", "p6000", "moto 2k", "mind 001", "cortez"],
+  "adidas": ["samba", "spezial", "campus", "gazelle"],
+  "the north face": ["tnf", "north face"],
+  "tnf": ["north face"],
+  "louis vuitton": ["lv "],
+  "lv": ["louis vuitton"]
+};
+
 function setSearch(value){
   searchQuery = value;
+  const active = value.trim() !== '';
+  document.getElementById('searchBox').classList.toggle('has-text', value.length > 0);
+  document.querySelector('.cat-bar').classList.toggle('searching', active);
+  document.body.classList.toggle('is-searching', active);
   renderGrid();
+}
+
+function clearSearch(){
+  const input = document.getElementById('searchInput');
+  input.value = '';
+  setSearch('');
+  input.focus();
+}
+
+function productSearchText(p){
+  const models = (typeof PRODUCT_MODELS !== 'undefined' && PRODUCT_MODELS[p.id]) ? PRODUCT_MODELS[p.id].map(m => m[0]).join(' ') : '';
+  return ' ' + normalizeText(`${p.name} ${p.category} ${models}`) + ' ';
+}
+
+function matchesSearch(p, query){
+  const text = productSearchText(p);
+  const q = normalizeText(query.trim());
+  // la búsqueda completa es una marca con alias (ej: "nike")
+  if(SEARCH_ALIASES[q] && (text.includes(q) || SEARCH_ALIASES[q].some(a => text.includes(normalizeText(a))))) return true;
+  // si no, tienen que aparecer todas las palabras (ej: "jordan 4")
+  return q.split(/\s+/).every(w => {
+    if(text.includes(w)) return true;
+    return (SEARCH_ALIASES[w] || []).some(a => text.includes(normalizeText(a)));
+  });
 }
 
 function money(n){ return n.toLocaleString('es-ES', {minimumFractionDigits:2, maximumFractionDigits:2}) + " €"; }
@@ -3631,16 +3718,31 @@ function scrollNav(dir){
 
 function setCategory(cat){
   activeCategory = cat;
+  if(searchQuery.trim() !== ''){
+    // al elegir una sección se limpia la búsqueda, para ver la sección entera
+    document.getElementById('searchInput').value = '';
+    searchQuery = '';
+    document.getElementById('searchBox').classList.remove('has-text');
+    document.querySelector('.cat-bar').classList.remove('searching');
+    document.body.classList.remove('is-searching');
+  }
   renderTabs();
   renderGrid();
 }
 
 function renderGrid(){
   const grid = document.getElementById('grid');
-  let items = activeCategory === "Todos" ? PRODUCTS : PRODUCTS.filter(p => p.category === activeCategory);
-  if(searchQuery.trim() !== ''){
-    const q = normalizeText(searchQuery.trim());
-    items = items.filter(p => normalizeText(p.name).includes(q));
+  const searching = searchQuery.trim() !== '';
+  // si hay búsqueda, se busca en TODAS las secciones
+  let items = searching
+    ? PRODUCTS.filter(p => matchesSearch(p, searchQuery))
+    : (activeCategory === "Todos" ? PRODUCTS : PRODUCTS.filter(p => p.category === activeCategory));
+  const info = document.getElementById('searchInfo');
+  if(info){
+    const safe = searchQuery.trim().replace(/[<>&"]/g, '');
+    info.innerHTML = searching
+      ? `<strong>${items.length}</strong> ${items.length === 1 ? 'resultado' : 'resultados'} para «${safe}» en todas las secciones`
+      : '';
   }
   grid.innerHTML = items.map(p => {
     const media = getMedia(p);
