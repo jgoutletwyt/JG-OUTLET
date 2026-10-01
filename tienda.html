@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>JG Outlet — Catálogo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
 
 /* ============================================================
@@ -180,6 +180,8 @@ nav::-webkit-scrollbar{display:none;}
 }
 .hero .eyebrow{color:var(--accent); font-size:11px; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:16px; font-weight:500;}
 .hero h1{font-size:clamp(30px,5vw,50px); margin:0 0 18px; color:var(--text); font-weight:600;}
+.hero h1.hero-title{font-family:"Bebas Neue", "Oswald", Impact, sans-serif; font-weight:400; font-style:normal; font-size:clamp(46px,8vw,84px); line-height:1; letter-spacing:0.02em;}
+.hero h1.hero-title .accent-word{color:var(--accent);}
 .hero p{color:var(--muted); max-width:520px; font-size:15px; line-height:1.6;}
 .hero-sub{color:var(--accent) !important; font-size:16px !important; font-weight:600; letter-spacing:0.02em; margin-top:-6px;}
 .local-badge{
@@ -472,7 +474,7 @@ footer{text-align:center; padding:30px; color:var(--muted); font-size:12px; bord
 
 <section class="hero">
   <div class="eyebrow hand">JG Outlet · Catálogo</div>
-  <h1 class="marker">Deja de mirar el catálogo.<br>Ahora míralo en la web.</h1>
+  <h1 class="hero-title">Todo el catálogo.<br>En una sola <span class="accent-word">web.</span></h1>
   <p class="hero-sub">Más de 1.000 productos disponibles.</p>
   <p>Consulta el catálogo, añade tus prendas al carrito y confirma tu pedido. Te contactaré por WhatsApp para cerrar la talla y el pago (Bizum, transferencia o en mano).</p>
   <div class="local-badge hand">Entregas en Granada capital y alrededores</div>
@@ -970,7 +972,7 @@ const PRODUCTS = [
     name: "Cortavientos Mertra",
     category: "Novedades",
     price: 39.0,
-    images: ["images/1029-cortavientos-mertra.jpg", "images/cortavientos-mertra-real-1.jpg", "images/cortavientos-mertra-real-2.jpg", "images/cortavientos-mertra-real-3.jpg", "images/cortavientos-mertra-real-4.jpg"],
+    images: ["images/1029-cortavientos-mertra.jpg", "images/cortavientos-mertra-real-2.jpg", "images/cortavientos-mertra-real-3.jpg", "images/cortavientos-mertra-real-4.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -1170,7 +1172,7 @@ const PRODUCTS = [
     name: "Pantalones Cortos Nocta",
     category: "Pantalones Cortos",
     price: 27.0,
-    images: ["images/0027-pantalones-cortos-nocta.jpg"],
+    images: ["images/0027-pantalones-cortos-nocta.jpg", "images/pantalones-cortos-nocta-real-1.jpg", "images/pantalones-cortos-nocta-real-2.jpg", "images/pantalones-cortos-nocta-real-3.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -1233,8 +1235,8 @@ const PRODUCTS = [
     id: 95,
     name: "Bañador Lacoste",
     category: "Pantalones Cortos",
-    price: 43.0,
-    images: ["images/0038-banador-lacoste.jpg", "images/0039-banador-lacoste.jpg", "images/0040-banador-lacoste.jpg"],
+    price: 39.0,
+    images: ["images/0038-banador-lacoste.jpg", "images/0039-banador-lacoste.jpg", "images/0040-banador-lacoste.jpg", "images/banador-lacoste-real-1.jpg", "images/banador-lacoste-real-2.jpg", "images/banador-lacoste-real-3.jpg", "images/banador-lacoste-real-4.jpg", "images/banador-lacoste-real-5.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -1242,7 +1244,7 @@ const PRODUCTS = [
     name: "Protect Jeans",
     category: "Pantalones Cortos",
     price: 33.0,
-    images: ["images/0041-protect-jeans.jpg"],
+    images: ["images/0041-protect-jeans.jpg", "images/protect-jeans-real-1.jpg", "images/protect-jeans-real-2.jpg", "images/protect-jeans-real-3.jpg", "images/protect-jeans-real-4.jpg", "images/protect-jeans-real-5.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -1250,7 +1252,7 @@ const PRODUCTS = [
     name: "Pantalones Cortos Corteiz",
     category: "Pantalones Cortos",
     price: 31.0,
-    images: ["images/0042-pantalones-cortos-corteiz.jpg", "images/0043-pantalones-cortos-corteiz.jpg", "images/0044-pantalones-cortos-corteiz.jpg", "images/0562-pantalones-cortos-corteiz.jpg"],
+    images: ["images/0042-pantalones-cortos-corteiz.jpg", "images/0043-pantalones-cortos-corteiz.jpg", "images/0044-pantalones-cortos-corteiz.jpg", "images/0562-pantalones-cortos-corteiz.jpg", "images/pantalones-cortos-corteiz-real-1.jpg", "images/pantalones-cortos-corteiz-real-2.jpg", "images/pantalones-cortos-corteiz-real-3.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -1274,7 +1276,7 @@ const PRODUCTS = [
     name: "Carhartt Jeans",
     category: "Pantalones Cortos",
     price: 33.0,
-    images: ["images/0051-carhartt-jeans.jpg", "images/0052-carhartt-jeans.jpg"],
+    images: ["images/0051-carhartt-jeans.jpg", "images/0052-carhartt-jeans.jpg", "images/carhartt-jeans-real-1.jpg", "images/carhartt-jeans-real-2.jpg", "images/carhartt-jeans-real-3.jpg", "images/carhartt-jeans-real-4.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -1920,7 +1922,7 @@ const PRODUCTS = [
 {
     id: 236,
     name: "Camiseta Neymar",
-    category: "Futbol",
+    category: "Camisetas",
     price: 29.0,
     images: ["images/0183-camiseta-neymar.jpg"],
     sizes: ["S", "M", "L", "XL"]
@@ -1928,7 +1930,7 @@ const PRODUCTS = [
 {
     id: 237,
     name: "Camiseta Cr7",
-    category: "Futbol",
+    category: "Camisetas",
     price: 29.0,
     images: ["images/0184-camiseta-cr7.jpg"],
     sizes: ["S", "M", "L", "XL"]
@@ -1936,7 +1938,7 @@ const PRODUCTS = [
 {
     id: 238,
     name: "Camiseta Messi",
-    category: "Futbol",
+    category: "Camisetas",
     price: 29.0,
     images: ["images/0185-camiseta-messi.jpg"],
     sizes: ["S", "M", "L", "XL"]
@@ -1986,7 +1988,7 @@ const PRODUCTS = [
     name: "Syna World Conjuntos Cortos (Mas Colores Disponibles)",
     category: "Pantalones Cortos",
     price: 45.0,
-    images: ["images/0196-syna-world-conjuntos-cortos-mas-colores-disponibles.jpg"],
+    images: ["images/0196-syna-world-conjuntos-cortos-mas-colores-disponibles.jpg", "images/syna-world-conjuntos-cortos-mas-colores-disponibles-real-1.jpg", "images/syna-world-conjuntos-cortos-mas-colores-disponibles-real-2.jpg", "images/syna-world-conjuntos-cortos-mas-colores-disponibles-real-3.jpg", "images/syna-world-conjuntos-cortos-mas-colores-disponibles-real-4.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2426,7 +2428,7 @@ const PRODUCTS = [
     name: "Bañador Louis Vuitton",
     category: "Pantalones Cortos",
     price: 27.0,
-    images: ["images/0553-banador-louis-vuitton.jpg", "images/0554-banador-louis-vuitton.jpg"],
+    images: ["images/0553-banador-louis-vuitton.jpg", "images/0554-banador-louis-vuitton.jpg", "images/banador-louis-vuitton-real-1.jpg", "images/banador-louis-vuitton-real-2.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2434,7 +2436,7 @@ const PRODUCTS = [
     name: "Bañador Versace",
     category: "Pantalones Cortos",
     price: 27.0,
-    images: ["images/0555-banador-versace.jpg"],
+    images: ["images/0555-banador-versace.jpg", "images/banador-versace-real-1.jpg", "images/banador-versace-real-2.jpg", "images/banador-versace-real-3.jpg", "images/banador-versace-real-4.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2450,7 +2452,7 @@ const PRODUCTS = [
     name: "Pantalon Corto Balenciaga",
     category: "Pantalones Cortos",
     price: 27.0,
-    images: ["images/0560-pantalon-corto-balenciaga.jpg"],
+    images: ["images/0560-pantalon-corto-balenciaga.jpg", "images/pantalon-corto-balenciaga-real-1.jpg", "images/pantalon-corto-balenciaga-real-2.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2458,7 +2460,7 @@ const PRODUCTS = [
     name: "Pantalones Cortos Under Armour",
     category: "Pantalones Cortos",
     price: 26.0,
-    images: ["images/0561-pantalones-cortos-under-armour.jpg"],
+    images: ["images/0561-pantalones-cortos-under-armour.jpg", "images/pantalones-cortos-under-armour-real-1.jpg", "images/pantalones-cortos-under-armour-real-2.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2466,7 +2468,7 @@ const PRODUCTS = [
     name: "Bottega Desires Jeans",
     category: "Pantalones Cortos",
     price: 27.0,
-    images: ["images/0563-bottega-desires-jeans.jpg"],
+    images: ["images/0563-bottega-desires-jeans.jpg", "images/bottega-desires-jeans-real-1.jpg", "images/bottega-desires-jeans-real-2.jpg", "images/bottega-desires-jeans-real-3.jpg", "images/bottega-desires-jeans-real-4.jpg", "images/bottega-desires-jeans-real-5.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2490,7 +2492,7 @@ const PRODUCTS = [
     name: "Pantalon Corto Oakley",
     category: "Pantalones Cortos",
     price: 23.0,
-    images: ["images/0566-pantalon-corto-oakley.jpg"],
+    images: ["images/0566-pantalon-corto-oakley.jpg", "images/pantalon-corto-oakley-real-1.jpg", "images/pantalon-corto-oakley-real-2.jpg", "images/pantalon-corto-oakley-real-3.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2498,7 +2500,7 @@ const PRODUCTS = [
     name: "Palm Angels Shorts (Mas Colores Disponibles)",
     category: "Pantalones Cortos",
     price: 25.0,
-    images: ["images/0578-palm-angels-shorts-mas-colores-disponibles.jpg", "images/0579-palm-angels-shorts-mas-colores-disponibles.jpg", "images/0580-palm-angels-shorts-mas-colores-disponibles.jpg", "images/0581-palm-angels-shorts-mas-colores-disponibles.jpg", "images/0582-palm-angels-shorts-mas-colores-disponibles.jpg"],
+    images: ["images/0578-palm-angels-shorts-mas-colores-disponibles.jpg", "images/0579-palm-angels-shorts-mas-colores-disponibles.jpg", "images/0580-palm-angels-shorts-mas-colores-disponibles.jpg", "images/0581-palm-angels-shorts-mas-colores-disponibles.jpg", "images/0582-palm-angels-shorts-mas-colores-disponibles.jpg", "images/palm-angels-shorts-mas-colores-disponibles-real-1.jpg", "images/palm-angels-shorts-mas-colores-disponibles-real-2.jpg", "images/palm-angels-shorts-mas-colores-disponibles-real-3.jpg", "images/palm-angels-shorts-mas-colores-disponibles-real-4.jpg", "images/palm-angels-shorts-mas-colores-disponibles-real-5.jpg", "images/palm-angels-shorts-mas-colores-disponibles-real-6.jpg", "images/palm-angels-shorts-mas-colores-disponibles-real-7.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2506,7 +2508,7 @@ const PRODUCTS = [
     name: "Ralph Lauren Bañador",
     category: "Pantalones Cortos",
     price: 26.0,
-    images: ["images/0588-ralph-lauren-banador.jpg", "images/0589-ralph-lauren-banador.jpg", "images/0590-ralph-lauren-banador.jpg", "images/0591-ralph-lauren-banador.jpg", "images/0592-ralph-lauren-banador.jpg"],
+    images: ["images/0588-ralph-lauren-banador.jpg", "images/0589-ralph-lauren-banador.jpg", "images/0590-ralph-lauren-banador.jpg", "images/0591-ralph-lauren-banador.jpg", "images/0592-ralph-lauren-banador.jpg", "images/ralph-lauren-banador-real-1.jpg", "images/ralph-lauren-banador-real-2.jpg", "images/ralph-lauren-banador-real-3.jpg", "images/ralph-lauren-banador-real-4.jpg", "images/ralph-lauren-banador-real-5.jpg", "images/ralph-lauren-banador-real-6.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2514,7 +2516,7 @@ const PRODUCTS = [
     name: "Lacoste Shorts",
     category: "Pantalones Cortos",
     price: 26.0,
-    images: ["images/0593-lacoste-shorts.jpg", "images/0594-lacoste-shorts.jpg", "images/0595-lacoste-shorts.jpg"],
+    images: ["images/0593-lacoste-shorts.jpg", "images/0594-lacoste-shorts.jpg", "images/0595-lacoste-shorts.jpg", "images/lacoste-shorts-real-1.jpg", "images/lacoste-shorts-real-2.jpg", "images/lacoste-shorts-real-3.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2522,7 +2524,7 @@ const PRODUCTS = [
     name: "Moncler Bañador",
     category: "Pantalones Cortos",
     price: 27.0,
-    images: ["images/0596-moncler-banador.jpg", "images/0597-moncler-banador.jpg", "images/0598-moncler-banador.jpg", "images/0599-moncler-banador.jpg", "images/0600-moncler-banador.jpg", "images/0601-moncler-banador.jpg", "images/0602-moncler-banador.jpg", "images/0603-moncler-banador.jpg", "images/0604-moncler-banador.jpg"],
+    images: ["images/0596-moncler-banador.jpg", "images/0597-moncler-banador.jpg", "images/0598-moncler-banador.jpg", "images/0599-moncler-banador.jpg", "images/0600-moncler-banador.jpg", "images/0601-moncler-banador.jpg", "images/0602-moncler-banador.jpg", "images/0603-moncler-banador.jpg", "images/0604-moncler-banador.jpg", "images/moncler-banador-real-1.jpg", "images/moncler-banador-real-2.jpg", "images/moncler-banador-real-3.jpg", "images/moncler-banador-real-4.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2554,7 +2556,7 @@ const PRODUCTS = [
     name: "Nike Tech Shorts",
     category: "Pantalones Cortos",
     price: 26.0,
-    images: ["images/0617-nike-tech-shorts.jpg", "images/0618-nike-tech-shorts.jpg", "images/0619-nike-tech-shorts.jpg", "images/0620-nike-tech-shorts.jpg", "images/0621-nike-tech-shorts.jpg", "images/0622-nike-tech-shorts.jpg"],
+    images: ["images/0617-nike-tech-shorts.jpg", "images/0618-nike-tech-shorts.jpg", "images/0619-nike-tech-shorts.jpg", "images/0620-nike-tech-shorts.jpg", "images/0621-nike-tech-shorts.jpg", "images/0622-nike-tech-shorts.jpg", "images/nike-tech-shorts-real-1.jpg", "images/nike-tech-shorts-real-2.jpg", "images/nike-tech-shorts-real-3.jpg", "images/nike-tech-shorts-real-4.jpg", "images/nike-tech-shorts-real-5.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2562,7 +2564,7 @@ const PRODUCTS = [
     name: "Essentials Shorts",
     category: "Pantalones Cortos",
     price: 27.0,
-    images: ["images/0623-essentials-shorts.jpg", "images/0624-essentials-shorts.jpg", "images/0625-essentials-shorts.jpg", "images/0626-essentials-shorts.jpg"],
+    images: ["images/0623-essentials-shorts.jpg", "images/0624-essentials-shorts.jpg", "images/0625-essentials-shorts.jpg", "images/0626-essentials-shorts.jpg", "images/essentials-shorts-real-1.jpg", "images/essentials-shorts-real-2.jpg", "images/essentials-shorts-real-3.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2570,7 +2572,7 @@ const PRODUCTS = [
     name: "Hellstar Shorts (Mas Modelos Disponibles)",
     category: "Pantalones Cortos",
     price: 27.0,
-    images: ["images/0627-hellstar-shorts-mas-modelos-disponibles.jpg", "images/0628-hellstar-shorts-mas-modelos-disponibles.jpg", "images/0629-hellstar-shorts-mas-modelos-disponibles.jpg", "images/0630-hellstar-shorts-mas-modelos-disponibles.jpg", "images/0631-hellstar-shorts-mas-modelos-disponibles.jpg", "images/0632-hellstar-shorts-mas-modelos-disponibles.jpg", "images/0633-hellstar-shorts-mas-modelos-disponibles.jpg"],
+    images: ["images/0627-hellstar-shorts-mas-modelos-disponibles.jpg", "images/0628-hellstar-shorts-mas-modelos-disponibles.jpg", "images/0629-hellstar-shorts-mas-modelos-disponibles.jpg", "images/0630-hellstar-shorts-mas-modelos-disponibles.jpg", "images/0631-hellstar-shorts-mas-modelos-disponibles.jpg", "images/0632-hellstar-shorts-mas-modelos-disponibles.jpg", "images/0633-hellstar-shorts-mas-modelos-disponibles.jpg", "images/hellstar-shorts-mas-modelos-disponibles-real-1.jpg", "images/hellstar-shorts-mas-modelos-disponibles-real-2.jpg", "images/hellstar-shorts-mas-modelos-disponibles-real-4.jpg", "images/hellstar-shorts-mas-modelos-disponibles-real-5.jpg", "images/hellstar-shorts-mas-modelos-disponibles-real-6.jpg", "images/hellstar-shorts-mas-modelos-disponibles-real-7.jpg", "images/hellstar-shorts-mas-modelos-disponibles-real-8.jpg", "images/hellstar-shorts-mas-modelos-disponibles-real-9.jpg", "images/hellstar-shorts-mas-modelos-disponibles-real-10.jpg", "images/hellstar-shorts-mas-modelos-disponibles-real-11.jpg", "images/hellstar-shorts-mas-modelos-disponibles-real-12.jpg", "images/hellstar-shorts-mas-modelos-disponibles-real-13.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2578,7 +2580,7 @@ const PRODUCTS = [
     name: "Denim Tears Shorts (Mas Colores Disponibles)",
     category: "Pantalones Cortos",
     price: 27.0,
-    images: ["images/0634-denim-tears-shorts-mas-colores-disponibles.jpg", "images/0635-denim-tears-shorts-mas-colores-disponibles.jpg", "images/0636-denim-tears-shorts-mas-colores-disponibles.jpg", "images/0637-denim-tears-shorts-mas-colores-disponibles.jpg", "images/0638-denim-tears-shorts-mas-colores-disponibles.jpg"],
+    images: ["images/0634-denim-tears-shorts-mas-colores-disponibles.jpg", "images/0635-denim-tears-shorts-mas-colores-disponibles.jpg", "images/0636-denim-tears-shorts-mas-colores-disponibles.jpg", "images/0637-denim-tears-shorts-mas-colores-disponibles.jpg", "images/0638-denim-tears-shorts-mas-colores-disponibles.jpg", "images/denim-tears-shorts-mas-colores-disponibles-real-1.jpg", "images/denim-tears-shorts-mas-colores-disponibles-real-2.jpg", "images/denim-tears-shorts-mas-colores-disponibles-real-3.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2586,7 +2588,7 @@ const PRODUCTS = [
     name: "Rhude Attack Shorts",
     category: "Pantalones Cortos",
     price: 27.0,
-    images: ["images/0639-rhude-attack-shorts.jpg", "images/0640-rhude-attack-shorts.jpg", "images/0641-rhude-attack-shorts.jpg", "images/0642-rhude-attack-shorts.jpg", "images/0643-rhude-attack-shorts.jpg", "images/0644-rhude-attack-shorts.jpg", "images/0645-rhude-attack-shorts.jpg", "images/0646-rhude-attack-shorts.jpg", "images/0647-rhude-attack-shorts.jpg", "images/0648-rhude-attack-shorts.jpg", "images/0649-rhude-attack-shorts.jpg"],
+    images: ["images/0639-rhude-attack-shorts.jpg", "images/0640-rhude-attack-shorts.jpg", "images/0641-rhude-attack-shorts.jpg", "images/0642-rhude-attack-shorts.jpg", "images/0643-rhude-attack-shorts.jpg", "images/0644-rhude-attack-shorts.jpg", "images/0645-rhude-attack-shorts.jpg", "images/0646-rhude-attack-shorts.jpg", "images/0647-rhude-attack-shorts.jpg", "images/0648-rhude-attack-shorts.jpg", "images/0649-rhude-attack-shorts.jpg", "images/rhude-attack-shorts-real-1.jpg", "images/rhude-attack-shorts-real-2.jpg", "images/rhude-attack-shorts-real-3.jpg", "images/rhude-attack-shorts-real-4.jpg", "images/rhude-attack-shorts-real-5.jpg", "images/rhude-attack-shorts-real-6.jpg", "images/rhude-attack-shorts-real-7.jpg", "images/rhude-attack-shorts-real-8.jpg", "images/rhude-attack-shorts-real-9.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -3530,7 +3532,7 @@ const PRODUCTS = [
 const PRODUCT_MODELS = {
   1052: [["Marrón oscuro", "images/1004-sudadera-nike-marron-oscuro.jpg"], ["Verde salvia", "images/1005-sudadera-nike-verde-salvia.jpg"], ["Roja", "images/1006-sudadera-nike-rojo.jpg", "images/sudadera-nike-mas-colores-disponibles-real-3.jpg"], ["Gris", "images/1007-sudadera-nike-gris.jpg"], ["Azul marino", "images/1008-sudadera-nike-azul-marino.jpg"], ["Beige", "images/1009-sudadera-nike-beige.jpg"], ["Azul cielo", "images/1010-sudadera-nike-azul-cielo.jpg"], ["Lila", "images/1011-sudadera-nike-lila.jpg", "images/sudadera-nike-mas-colores-disponibles-real-1.jpg"], ["Marrón topo", "images/1012-sudadera-nike-marron-topo.jpg"], ["Blanca", "images/1013-sudadera-nike-blanco.jpg"], ["Negra", "images/1014-sudadera-nike-negro.jpg", "images/sudadera-nike-mas-colores-disponibles-real-2.jpg"]],
   1053: [["Gris", "images/1025-chandal-juicy-couture.jpg", "images/chandal-juicy-couture-real-2.jpg", "images/chandal-juicy-couture-real-3.jpg"], ["Rosa", "images/chandal-juicy-couture-real-4.jpg", "images/chandal-juicy-couture-real-5.jpg", "images/chandal-juicy-couture-real-6.jpg"]],
-  1057: [["Negro", "images/1029-cortavientos-mertra.jpg"], ["Negro estampado", "images/cortavientos-mertra-real-1.jpg"], ["Cuadros azul", "images/cortavientos-mertra-real-2.jpg"], ["Azul cielo", "images/cortavientos-mertra-real-3.jpg"], ["Gris", "images/cortavientos-mertra-real-4.jpg"]],
+  1057: [["Negro", "images/1029-cortavientos-mertra.jpg"], ["Cuadros azul", "images/cortavientos-mertra-real-2.jpg"], ["Azul cielo", "images/cortavientos-mertra-real-3.jpg"], ["Gris", "images/cortavientos-mertra-real-4.jpg"]],
   1060: [["Negro", "images/1032-pantalon-north-face.jpg", "images/pantalon-north-face-real-1.jpg", "images/pantalon-north-face-real-2.jpg"], ["Gris", "images/pantalon-north-face-real-3.jpg", "images/pantalon-north-face-real-4.jpg"]],
   1061: [["Verde", "images/1015-chaqueta-rhude.jpg", "images/1016-chaqueta-rhude.jpg", "images/chaqueta-rhude-real-1.jpg", "images/chaqueta-rhude-real-2.jpg"], ["Roja", "images/1017-chaqueta-rhude.jpg", "images/1018-chaqueta-rhude.jpg"]],
   59: [["Negras", "images/0001-alo-yoga-runners-mas-colores-disponibles.jpg", "images/alo-yoga-runners-mas-colores-disponibles-2.jpg", "images/alo-yoga-runners-mas-colores-disponibles-3.jpg", "images/alo-yoga-runners-mas-colores-disponibles-4.jpg"], ["Blancas", "images/alo-yoga-runners-mas-colores-disponibles-5.jpg", "images/alo-yoga-runners-mas-colores-disponibles-6.jpg"]],
@@ -3541,11 +3543,11 @@ const PRODUCT_MODELS = {
   85: [["Negra logo negro", "images/0028-gorra-alo-yoga-mas-colores-disponibles.jpg"], ["Negra logo blanco", "images/gorra-alo-yoga-mas-colores-disponibles-real-1.jpg", "images/gorra-alo-yoga-mas-colores-disponibles-real-2.jpg"]],
   89: [["Azul claro", "images/0032-nike-mind-001-nocta.jpg", "images/real-nike-mind-001-nocta-01.jpg", "images/real-nike-mind-001-nocta-02.jpg", "images/real-nike-mind-001-nocta-03.jpg", "images/real-nike-mind-001-nocta-04.jpg"], ["Negras", "images/0033-nike-mind-001-nocta.jpg", "images/real-nike-mind-001-nocta-05.jpg", "images/real-nike-mind-001-nocta-06.jpg", "images/real-nike-mind-001-nocta-07.jpg"]],
   91: [["Azul marino", "images/0034-nike-mind-001.jpg", "images/real-nike-mind-001-01.jpg", "images/real-nike-mind-001-02.jpg", "images/real-nike-mind-001-03.jpg"], ["Verdes", "images/0035-nike-mind-001.jpg"], ["Negras", "images/0036-nike-mind-001.jpg"]],
-  95: [["Verde agua", "images/0038-banador-lacoste.jpg"], ["Gris oscuro", "images/0039-banador-lacoste.jpg"], ["Azul", "images/0040-banador-lacoste.jpg"]],
-  99: [["Gris CRTZ", "images/0042-pantalones-cortos-corteiz.jpg"], ["Camuflaje CRTZ", "images/0043-pantalones-cortos-corteiz.jpg"], ["Negro CRTZ", "images/0044-pantalones-cortos-corteiz.jpg"], ["Negro Corteiz", "images/0562-pantalones-cortos-corteiz.jpg"]],
+  95: [["Verde agua", "images/0038-banador-lacoste.jpg", "images/banador-lacoste-real-4.jpg", "images/banador-lacoste-real-5.jpg"], ["Gris oscuro", "images/0039-banador-lacoste.jpg", "images/banador-lacoste-real-3.jpg"], ["Azul", "images/0040-banador-lacoste.jpg", "images/banador-lacoste-real-1.jpg", "images/banador-lacoste-real-2.jpg"]],
+  99: [["Gris CRTZ", "images/0042-pantalones-cortos-corteiz.jpg", "images/pantalones-cortos-corteiz-real-1.jpg"], ["Camuflaje CRTZ", "images/0043-pantalones-cortos-corteiz.jpg", "images/pantalones-cortos-corteiz-real-3.jpg"], ["Negro CRTZ", "images/0044-pantalones-cortos-corteiz.jpg", "images/pantalones-cortos-corteiz-real-2.jpg"], ["Negro Corteiz", "images/0562-pantalones-cortos-corteiz.jpg"]],
   102: [["Crema", "images/0045-conjunto-represent.jpg"], ["Verde", "images/0046-conjunto-represent.jpg"], ["Negro", "images/0047-conjunto-represent.jpg"]],
   105: [["Verde", "images/0048-bolso-lacoste.jpg"], ["Negro", "images/0049-bolso-lacoste.jpg"], ["Gris", "images/0050-bolso-lacoste.jpg"]],
-  108: [["Azul claro", "images/0051-carhartt-jeans.jpg"], ["Negro", "images/0052-carhartt-jeans.jpg"]],
+  108: [["Azul claro", "images/0051-carhartt-jeans.jpg", "images/carhartt-jeans-real-1.jpg", "images/carhartt-jeans-real-2.jpg"], ["Negro", "images/0052-carhartt-jeans.jpg", "images/carhartt-jeans-real-3.jpg", "images/carhartt-jeans-real-4.jpg"]],
   118: [["Blanca y negra", "images/0062-bapesta-muchos-colores.jpg"], ["Negra charol", "images/real-bapesta-muchos-colores-01.jpg", "images/real-bapesta-muchos-colores-02.jpg"], ["Azul", "images/real-bapesta-muchos-colores-03.jpg", "images/real-bapesta-muchos-colores-04.jpg", "images/real-bapesta-muchos-colores-05.jpg"], ["Blanca estrella azul", "images/real-bapesta-muchos-colores-06.jpg"], ["Negra y azul claro", "images/real-bapesta-muchos-colores-07.jpg"], ["Roja", "images/real-bapesta-muchos-colores-08.jpg"], ["Blanca, negra y roja", "images/real-bapesta-muchos-colores-09.jpg"], ["Rosa", "images/real-bapesta-muchos-colores-10.jpg"], ["Beige", "images/real-bapesta-muchos-colores-11.jpg"], ["Azul claro", "images/real-bapesta-muchos-colores-12.jpg"]],
   127: [["Negras", "images/0071-adidas-original-samba-og.jpg", "images/real-adidas-original-samba-og-01.jpg"], ["Blancas y negras", "images/0072-adidas-original-samba-og.jpg", "images/real-adidas-original-samba-og-02.jpg"], ["Blancas y azul", "images/0073-adidas-original-samba-og.jpg"]],
   144: [["Blanca", "images/0088-nike-air-max-plus-tn-37-modelos.jpg"], ["Negra, gris y roja", "images/nike-air-max-plus-tn-37-modelos-real-1.jpg"], ["Rosa", "images/nike-air-max-plus-tn-37-modelos-real-2.jpg"], ["Blanca multicolor", "images/nike-air-max-plus-tn-37-modelos-real-3.jpg"], ["Negra y azul", "images/nike-air-max-plus-tn-37-modelos-real-4.jpg"], ["Negra swoosh de colores", "images/nike-air-max-plus-tn-37-modelos-real-5.jpg"], ["Negra entera", "images/nike-air-max-plus-tn-37-modelos-real-6.jpg"], ["Degradado morado", "images/nike-air-max-plus-tn-37-modelos-real-7.jpg"]],
@@ -3606,20 +3608,20 @@ const PRODUCT_MODELS = {
   593: [["Azul claro", "images/0540-nike-nocta-tech-fleece-pants.jpg"], ["Verde", "images/0541-nike-nocta-tech-fleece-pants.jpg"], ["Negro", "images/0542-nike-nocta-tech-fleece-pants.jpg"]],
   596: [["Negro", "images/0543-sp5der-pants.jpg"], ["Azul", "images/0544-sp5der-pants.jpg"], ["Azul claro", "images/0545-sp5der-pants.jpg"], ["Morado", "images/0546-sp5der-pants.jpg"], ["Fucsia", "images/0547-sp5der-pants.jpg"], ["Rosa", "images/0548-sp5der-pants.jpg"]],
   602: [["Azul claro", "images/0549-gallery-dept-flared-jeans.jpg"], ["Azul salpicado", "images/0550-gallery-dept-flared-jeans.jpg"]],
-  606: [["Multicolor", "images/0553-banador-louis-vuitton.jpg"], ["Azul", "images/0554-banador-louis-vuitton.jpg"]],
+  606: [["Multicolor", "images/0553-banador-louis-vuitton.jpg", "images/banador-louis-vuitton-real-1.jpg", "images/banador-louis-vuitton-real-2.jpg"], ["Azul", "images/0554-banador-louis-vuitton.jpg"]],
   609: [["Negro", "images/0556-banador-hugo-boss.jpg"], ["Azul marino", "images/0557-banador-hugo-boss.jpg"], ["Blanco", "images/0558-banador-hugo-boss.jpg"], ["Azul", "images/0559-banador-hugo-boss.jpg"]],
   617: [["Negro diamante", "images/0564-jordan-shorts.jpg"], ["Negro JORDAN", "images/0567-jordan-shorts.jpg"], ["Negro ribete blanco", "images/0568-jordan-shorts.jpg"], ["Blanco ribete negro", "images/0569-jordan-shorts.jpg"], ["Negro cordón morado", "images/0570-jordan-shorts.jpg"], ["Blanco cordón morado", "images/0571-jordan-shorts.jpg"], ["Negro JORDAN banda", "images/0572-jordan-shorts.jpg"], ["Blanco JORDAN banda", "images/0573-jordan-shorts.jpg"], ["Negro y blanco", "images/0574-jordan-shorts.jpg"], ["Negro Just Do It", "images/0575-jordan-shorts.jpg"], ["Negro Elite", "images/0576-jordan-shorts.jpg"], ["Negro franja blanca", "images/0577-jordan-shorts.jpg"]],
-  631: [["Negro", "images/0578-palm-angels-shorts-mas-colores-disponibles.jpg"], ["Blanco", "images/0579-palm-angels-shorts-mas-colores-disponibles.jpg"], ["Beige", "images/0580-palm-angels-shorts-mas-colores-disponibles.jpg"], ["Rosa", "images/0581-palm-angels-shorts-mas-colores-disponibles.jpg"], ["Verde", "images/0582-palm-angels-shorts-mas-colores-disponibles.jpg"]],
-  636: [["Negro", "images/0588-ralph-lauren-banador.jpg"], ["Azul marino", "images/0589-ralph-lauren-banador.jpg"], ["Verde", "images/0590-ralph-lauren-banador.jpg"], ["Rosa", "images/0591-ralph-lauren-banador.jpg"], ["Azul claro", "images/0592-ralph-lauren-banador.jpg"]],
-  641: [["Negro", "images/0593-lacoste-shorts.jpg"], ["Azul marino", "images/0594-lacoste-shorts.jpg"], ["Gris", "images/0595-lacoste-shorts.jpg"]],
-  644: [["Azul marino", "images/0596-moncler-banador.jpg"], ["Negro", "images/0597-moncler-banador.jpg"], ["Azul cielo", "images/0598-moncler-banador.jpg"], ["Naranja", "images/0599-moncler-banador.jpg"], ["Blanco", "images/0600-moncler-banador.jpg"], ["Verde oliva", "images/0601-moncler-banador.jpg"], ["Azul", "images/0602-moncler-banador.jpg"], ["Verde flúor", "images/0603-moncler-banador.jpg"], ["Rojo", "images/0604-moncler-banador.jpg"]],
+  631: [["Negro", "images/0578-palm-angels-shorts-mas-colores-disponibles.jpg", "images/palm-angels-shorts-mas-colores-disponibles-real-2.jpg"], ["Blanco", "images/0579-palm-angels-shorts-mas-colores-disponibles.jpg", "images/palm-angels-shorts-mas-colores-disponibles-real-1.jpg"], ["Beige", "images/0580-palm-angels-shorts-mas-colores-disponibles.jpg", "images/palm-angels-shorts-mas-colores-disponibles-real-3.jpg"], ["Rosa", "images/0581-palm-angels-shorts-mas-colores-disponibles.jpg"], ["Verde", "images/0582-palm-angels-shorts-mas-colores-disponibles.jpg"], ["Azul claro", "images/palm-angels-shorts-mas-colores-disponibles-real-4.jpg"], ["Rojo", "images/palm-angels-shorts-mas-colores-disponibles-real-5.jpg"], ["Azul", "images/palm-angels-shorts-mas-colores-disponibles-real-6.jpg"], ["Negro y rosa", "images/palm-angels-shorts-mas-colores-disponibles-real-7.jpg"]],
+  636: [["Negro", "images/0588-ralph-lauren-banador.jpg", "images/ralph-lauren-banador-real-1.jpg", "images/ralph-lauren-banador-real-2.jpg", "images/ralph-lauren-banador-real-6.jpg"], ["Azul marino", "images/0589-ralph-lauren-banador.jpg", "images/ralph-lauren-banador-real-5.jpg"], ["Verde", "images/0590-ralph-lauren-banador.jpg"], ["Rosa", "images/0591-ralph-lauren-banador.jpg", "images/ralph-lauren-banador-real-4.jpg"], ["Azul claro", "images/0592-ralph-lauren-banador.jpg", "images/ralph-lauren-banador-real-3.jpg"]],
+  641: [["Negro", "images/0593-lacoste-shorts.jpg", "images/lacoste-shorts-real-1.jpg"], ["Azul marino", "images/0594-lacoste-shorts.jpg", "images/lacoste-shorts-real-3.jpg"], ["Gris", "images/0595-lacoste-shorts.jpg", "images/lacoste-shorts-real-2.jpg"]],
+  644: [["Azul marino", "images/0596-moncler-banador.jpg", "images/moncler-banador-real-3.jpg"], ["Negro", "images/0597-moncler-banador.jpg"], ["Azul cielo", "images/0598-moncler-banador.jpg"], ["Naranja", "images/0599-moncler-banador.jpg"], ["Blanco", "images/0600-moncler-banador.jpg", "images/moncler-banador-real-4.jpg"], ["Verde oliva", "images/0601-moncler-banador.jpg", "images/moncler-banador-real-2.jpg"], ["Azul", "images/0602-moncler-banador.jpg"], ["Verde flúor", "images/0603-moncler-banador.jpg"], ["Rojo", "images/0604-moncler-banador.jpg", "images/moncler-banador-real-1.jpg"]],
   653: [["Blanco", "images/0605-tommy-hilfiger-banador-disponibles-mas-modelos.jpg"], ["Azul marino", "images/0606-tommy-hilfiger-banador-disponibles-mas-modelos.jpg"], ["Azul claro", "images/0607-tommy-hilfiger-banador-disponibles-mas-modelos.jpg"], ["Azul", "images/0608-tommy-hilfiger-banador-disponibles-mas-modelos.jpg"], ["Rojo", "images/0609-tommy-hilfiger-banador-disponibles-mas-modelos.jpg"]],
   659: [["Logo amarillo", "images/0611-corteiz-mula-guerillaz-logo.jpg"], ["Logo verde", "images/0612-corteiz-mula-guerillaz-logo.jpg"]],
   663: [["Negro", "images/0615-stone-island-cargo-shorts.jpg"], ["Gris", "images/0616-stone-island-cargo-shorts.jpg"]],
-  665: [["Negro", "images/0617-nike-tech-shorts.jpg"], ["Blanco", "images/0618-nike-tech-shorts.jpg"], ["Gris", "images/0619-nike-tech-shorts.jpg"], ["Azul claro", "images/0620-nike-tech-shorts.jpg"], ["Verde", "images/0621-nike-tech-shorts.jpg"], ["Rojo", "images/0622-nike-tech-shorts.jpg"]],
-  671: [["Negro", "images/0623-essentials-shorts.jpg"], ["Blanco", "images/0624-essentials-shorts.jpg"], ["Gris", "images/0625-essentials-shorts.jpg"], ["Verde claro", "images/0626-essentials-shorts.jpg"]],
+  665: [["Negro", "images/0617-nike-tech-shorts.jpg", "images/nike-tech-shorts-real-3.jpg"], ["Blanco", "images/0618-nike-tech-shorts.jpg"], ["Gris", "images/0619-nike-tech-shorts.jpg", "images/nike-tech-shorts-real-2.jpg"], ["Azul claro", "images/0620-nike-tech-shorts.jpg", "images/nike-tech-shorts-real-1.jpg"], ["Verde", "images/0621-nike-tech-shorts.jpg"], ["Rojo", "images/0622-nike-tech-shorts.jpg"], ["Azul", "images/nike-tech-shorts-real-4.jpg"], ["Beige", "images/nike-tech-shorts-real-5.jpg"]],
+  671: [["Negro", "images/0623-essentials-shorts.jpg", "images/essentials-shorts-real-3.jpg"], ["Blanco", "images/0624-essentials-shorts.jpg"], ["Gris", "images/0625-essentials-shorts.jpg", "images/essentials-shorts-real-2.jpg"], ["Verde claro", "images/0626-essentials-shorts.jpg"], ["Gris oscuro", "images/essentials-shorts-real-1.jpg"]],
   675: [["Negro calavera", "images/0627-hellstar-shorts-mas-modelos-disponibles.jpg"], ["Gris llamas blancas", "images/0628-hellstar-shorts-mas-modelos-disponibles.jpg"], ["Gris llamas negras", "images/0629-hellstar-shorts-mas-modelos-disponibles.jpg"], ["Azul claro", "images/0630-hellstar-shorts-mas-modelos-disponibles.jpg"], ["Negro lateral", "images/0631-hellstar-shorts-mas-modelos-disponibles.jpg"], ["Gris llamas rosas", "images/0632-hellstar-shorts-mas-modelos-disponibles.jpg"], ["Negro franja blanca", "images/0633-hellstar-shorts-mas-modelos-disponibles.jpg"]],
-  682: [["Negro", "images/0634-denim-tears-shorts-mas-colores-disponibles.jpg"], ["Gris", "images/0635-denim-tears-shorts-mas-colores-disponibles.jpg"], ["Verde", "images/0636-denim-tears-shorts-mas-colores-disponibles.jpg"], ["Morado", "images/0637-denim-tears-shorts-mas-colores-disponibles.jpg"], ["Rojo", "images/0638-denim-tears-shorts-mas-colores-disponibles.jpg"]],
+  682: [["Negro", "images/0634-denim-tears-shorts-mas-colores-disponibles.jpg", "images/denim-tears-shorts-mas-colores-disponibles-real-1.jpg", "images/denim-tears-shorts-mas-colores-disponibles-real-2.jpg"], ["Gris", "images/0635-denim-tears-shorts-mas-colores-disponibles.jpg", "images/denim-tears-shorts-mas-colores-disponibles-real-3.jpg"], ["Verde", "images/0636-denim-tears-shorts-mas-colores-disponibles.jpg"], ["Morado", "images/0637-denim-tears-shorts-mas-colores-disponibles.jpg"], ["Rojo", "images/0638-denim-tears-shorts-mas-colores-disponibles.jpg"]],
   687: [["Negro ribete blanco", "images/0639-rhude-attack-shorts.jpg"], ["Rojo", "images/0640-rhude-attack-shorts.jpg"], ["Verde", "images/0641-rhude-attack-shorts.jpg"], ["Negro", "images/0642-rhude-attack-shorts.jpg"], ["Azul", "images/0643-rhude-attack-shorts.jpg"], ["Rojo cremalleras", "images/0644-rhude-attack-shorts.jpg"], ["Azul marino", "images/0645-rhude-attack-shorts.jpg"], ["Verde azulado", "images/0646-rhude-attack-shorts.jpg"], ["Azul claro y blanco", "images/0647-rhude-attack-shorts.jpg"], ["Verde y blanco", "images/0648-rhude-attack-shorts.jpg"], ["Azul y gris", "images/0649-rhude-attack-shorts.jpg"]],
   699: [["Negro", "images/cortavientos-brasil-gore-tex-real-1.jpg"], ["Blanco", "images/cortavientos-brasil-gore-tex-real-2.jpg", "images/cortavientos-brasil-gore-tex-real-3.jpg"]],
   700: [["Negro y gris", "images/cortavientos-nocta-real-1.jpg", "images/cortavientos-nocta-real-2.jpg"], ["Negro y amarillo", "images/cortavientos-nocta-real-3.jpg", "images/cortavientos-nocta-real-4.jpg"], ["Morado", "images/cortavientos-nocta-real-5.jpg", "images/cortavientos-nocta-real-6.jpg"]],
@@ -3767,8 +3769,10 @@ function money(n){ return n.toLocaleString('es-ES', {minimumFractionDigits:2, ma
 function getMedia(p){
   // admite tanto "images: [...]" (varias fotos) como el antiguo "image: '...'" (una sola)
   const imgs = (p.images && p.images.length) ? p.images : (p.image ? [p.image] : []);
-  const media = imgs.map(src => ({type:'image', src, isReal: !/images\/\d{4}-/.test(src)}));
-  if(p.video){ media.push({type:'video', src:p.video, isReal: !/images\/\d{4}-/.test(p.video)}); }
+  // Foto de catálogo: empieza por 4 cifras (0001-...) o contiene "-portada". El resto son fotos reales.
+  const isRealSrc = s => !(/images\/\d{4}-/.test(s) || /-portada\./.test(s));
+  const media = imgs.map(src => ({type:'image', src, isReal: isRealSrc(src)}));
+  if(p.video){ media.push({type:'video', src:p.video, isReal: isRealSrc(p.video)}); }
   return media;
 }
 
