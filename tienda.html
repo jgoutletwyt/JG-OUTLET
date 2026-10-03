@@ -3,7 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JG Outlet — Catálogo</title>
+<title>JG Outlet — Ropa, zapatillas y camisetas de fútbol en Granada</title>
+<meta name="description" content="Catálogo JG Outlet: ropa, zapatillas, accesorios y camisetas de fútbol 26/27 personalizables. Pide por WhatsApp. Entregas en Granada y alrededores.">
+<meta name="theme-color" content="#0c0c0d">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-src 'none'">
+<meta property="og:type" content="website">
+<meta property="og:title" content="JG Outlet — Catálogo">
+<meta property="og:description" content="Ropa, zapatillas y camisetas de fútbol 26/27. Pide por WhatsApp.">
+<meta property="og:image" content="images/logo.png">
+<link rel="icon" href="images/logo.png">
+<link rel="apple-touch-icon" href="images/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
@@ -541,15 +551,15 @@ footer{text-align:center; padding:30px; color:var(--muted); font-size:12px; bord
     <p class="sub">Rellena tus datos. Se abrirá WhatsApp con tu pedido ya redactado — no se realiza ningún cobro aquí, te contactaré para confirmar el pago.</p>
     <div class="field">
       <label>Nombre</label>
-      <input type="text" id="custName" placeholder="Tu nombre">
+      <input type="text" id="custName" maxlength="60" autocomplete="name" placeholder="Tu nombre">
     </div>
     <div class="field">
       <label>Teléfono (WhatsApp)</label>
-      <input type="tel" id="custPhone" placeholder="Ej. 612 345 678">
+      <input type="tel" id="custPhone" maxlength="25" autocomplete="tel" placeholder="Ej. 612 345 678">
     </div>
     <div class="field">
       <label>Notas (opcional)</label>
-      <textarea id="custNotes" placeholder="Talla, dirección, preferencias..."></textarea>
+      <textarea id="custNotes" maxlength="500" placeholder="Talla, dirección, preferencias..."></textarea>
     </div>
     <div class="delivery-note" id="modalDelivery"></div>
     <label class="delivery-ok"><input type="checkbox" id="deliveryOk"> He leído y acepto el plazo de entrega estimado</label>
@@ -580,13 +590,6 @@ footer{text-align:center; padding:30px; color:var(--muted); font-size:12px; bord
 </div>
 
 <script>
-/* ============================================================
-   0) TU LOGO
-   Ya está puesto: images/logo.jpg (el que me pasaste).
-   Si algún día quieres cambiarlo, sustituye ese archivo por
-   otro con el mismo nombre "logo.jpg" dentro de la carpeta
-   "images". Se recorta automáticamente en círculo.
-   ============================================================ */
 
 /* ============================================================
    1) TU WHATSAPP — a este número llegarán los pedidos
@@ -2032,7 +2035,7 @@ const PRODUCTS = [
     name: "Syna World Camisetas",
     category: "Camisetas",
     price: 29.0,
-    images: ["images/0197-syna-world-camisetas.jpg", "images/syna-world-camisetas-2.jpg", "images/syna-world-camisetas-3-c.jpg", "images/syna-world-camisetas-4.jpg", "images/0198-syna-world-camisetas.jpg", "images/0199-syna-world-camisetas.jpg", "images/syna-world-camisetas-2-2.png", "images/syna-world-camisetas-3.jpg", "images/0200-syna-world-camisetas.jpg", "images/syna-world-camisetas-2-3.png", "images/syna-world-camisetas-4-2.jpg", "images/0201-syna-world-camisetas.jpg", "images/syna-world-camisetas-2-4.jpg", "images/syna-world-camisetas-3-2.jpg", "images/0202-syna-world-camisetas.jpg", "images/syna-world-camisetas-2-5.jpg", "images/syna-world-camisetas-3-3.jpg", "images/0203-syna-world-camisetas.jpg", "images/syna-world-camisetas-2-6.jpg", "images/syna-world-camisetas-3-4.jpg", "images/0204-syna-world-camisetas.jpg", "images/0205-syna-world-camisetas.jpg", "images/0206-syna-world-camisetas.jpg", "images/0207-syna-world-camisetas.jpg", "images/0208-syna-world-camisetas.jpg", "images/0209-syna-world-camisetas.jpg"],
+    images: ["images/0197-syna-world-camisetas.jpg", "images/syna-world-camisetas-2.jpg", "images/syna-world-camisetas-3-c.jpg", "images/syna-world-camisetas-4.jpg", "images/0198-syna-world-camisetas.jpg", "images/0199-syna-world-camisetas.jpg", "images/syna-world-camisetas-3.jpg", "images/0200-syna-world-camisetas.jpg", "images/syna-world-camisetas-4-2.jpg", "images/0201-syna-world-camisetas.jpg", "images/syna-world-camisetas-2-4.jpg", "images/syna-world-camisetas-3-2.jpg", "images/0202-syna-world-camisetas.jpg", "images/syna-world-camisetas-2-5.jpg", "images/syna-world-camisetas-3-3.jpg", "images/0203-syna-world-camisetas.jpg", "images/syna-world-camisetas-2-6.jpg", "images/syna-world-camisetas-3-4.jpg", "images/0204-syna-world-camisetas.jpg", "images/0205-syna-world-camisetas.jpg", "images/0206-syna-world-camisetas.jpg", "images/0207-syna-world-camisetas.jpg", "images/0208-syna-world-camisetas.jpg", "images/0209-syna-world-camisetas.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2136,7 +2139,7 @@ const PRODUCTS = [
     name: "Bape Polo",
     category: "Camisetas",
     price: 33.0,
-    images: ["images/0384-bape-polo.jpg", "images/bape-polo-real-1.png", "images/bape-polo-real-2.png", "images/bape-polo-real-3.png", "images/bape-polo-real-4.png", "images/bape-polo-real-5.png"],
+    images: ["images/0384-bape-polo.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2144,7 +2147,7 @@ const PRODUCTS = [
     name: "Ralph Lauren Camisa",
     category: "Camisetas",
     price: 39.0,
-    images: ["images/0385-ralph-lauren-camisa.jpg", "images/ralph-lauren-camisa-real-1.png", "images/ralph-lauren-camisa-real-2.png", "images/ralph-lauren-camisa-real-3.png", "images/ralph-lauren-camisa-real-4.png", "images/ralph-lauren-camisa-real-5.png"],
+    images: ["images/0385-ralph-lauren-camisa.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2152,7 +2155,7 @@ const PRODUCTS = [
     name: "Lacoste Camisetas",
     category: "Camisetas",
     price: 29.0,
-    images: ["images/0389-lacoste-camisetas.jpg", "images/0390-lacoste-camisetas.jpg", "images/0391-lacoste-camisetas.jpg", "images/0392-lacoste-camisetas.jpg", "images/0393-lacoste-camisetas.jpg", "images/0394-lacoste-camisetas.jpg", "images/0395-lacoste-camisetas.jpg", "images/0396-lacoste-camisetas.jpg", "images/0397-lacoste-camisetas.jpg", "images/0398-lacoste-camisetas.jpg", "images/lacoste-camisetas-real-1.png", "images/lacoste-camisetas-real-2.png", "images/lacoste-camisetas-real-3.png"],
+    images: ["images/0389-lacoste-camisetas.jpg", "images/0390-lacoste-camisetas.jpg", "images/0391-lacoste-camisetas.jpg", "images/0392-lacoste-camisetas.jpg", "images/0393-lacoste-camisetas.jpg", "images/0394-lacoste-camisetas.jpg", "images/0395-lacoste-camisetas.jpg", "images/0396-lacoste-camisetas.jpg", "images/0397-lacoste-camisetas.jpg", "images/0398-lacoste-camisetas.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -2160,7 +2163,7 @@ const PRODUCTS = [
     name: "Stussy Camisetas",
     category: "Camisetas",
     price: 29.0,
-    images: ["images/0399-stussy-camisetas.jpg", "images/0400-stussy-camisetas.jpg", "images/0401-stussy-camisetas.jpg", "images/0402-stussy-camisetas.jpg", "images/0403-stussy-camisetas.jpg", "images/0404-stussy-camisetas.jpg", "images/0405-stussy-camisetas.jpg", "images/0406-stussy-camisetas.jpg", "images/0407-stussy-camisetas.jpg", "images/0408-stussy-camisetas.jpg", "images/0409-stussy-camisetas.jpg", "images/0410-stussy-camisetas.jpg", "images/0411-stussy-camisetas.jpg", "images/0412-stussy-camisetas.jpg", "images/0413-stussy-camisetas.jpg", "images/0414-stussy-camisetas.jpg", "images/0415-stussy-camisetas.jpg", "images/0416-stussy-camisetas.jpg", "images/0417-stussy-camisetas.jpg", "images/0418-stussy-camisetas.jpg", "images/0419-stussy-camisetas.jpg", "images/0420-stussy-camisetas.jpg", "images/0421-stussy-camisetas.jpg", "images/0422-stussy-camisetas.jpg", "images/0423-stussy-camisetas.jpg", "images/0424-stussy-camisetas.jpg", "images/0425-stussy-camisetas.jpg", "images/0426-stussy-camisetas.jpg", "images/0427-stussy-camisetas.jpg", "images/0428-stussy-camisetas.jpg", "images/0429-stussy-camisetas.jpg", "images/0430-stussy-camisetas.jpg", "images/stussy-camisetas-real-1.png", "images/stussy-camisetas-real-2.png", "images/stussy-camisetas-real-3.png", "images/stussy-camisetas-real-4.png", "images/stussy-camisetas-real-5.png", "images/stussy-camisetas-real-6.png", "images/stussy-camisetas-real-7.png", "images/stussy-camisetas-real-8.png", "images/stussy-camisetas-real-9.png", "images/stussy-camisetas-real-10.png"],
+    images: ["images/0399-stussy-camisetas.jpg", "images/0400-stussy-camisetas.jpg", "images/0401-stussy-camisetas.jpg", "images/0402-stussy-camisetas.jpg", "images/0403-stussy-camisetas.jpg", "images/0404-stussy-camisetas.jpg", "images/0405-stussy-camisetas.jpg", "images/0406-stussy-camisetas.jpg", "images/0407-stussy-camisetas.jpg", "images/0408-stussy-camisetas.jpg", "images/0409-stussy-camisetas.jpg", "images/0410-stussy-camisetas.jpg", "images/0411-stussy-camisetas.jpg", "images/0412-stussy-camisetas.jpg", "images/0413-stussy-camisetas.jpg", "images/0414-stussy-camisetas.jpg", "images/0415-stussy-camisetas.jpg", "images/0416-stussy-camisetas.jpg", "images/0417-stussy-camisetas.jpg", "images/0418-stussy-camisetas.jpg", "images/0419-stussy-camisetas.jpg", "images/0420-stussy-camisetas.jpg", "images/0421-stussy-camisetas.jpg", "images/0422-stussy-camisetas.jpg", "images/0423-stussy-camisetas.jpg", "images/0424-stussy-camisetas.jpg", "images/0425-stussy-camisetas.jpg", "images/0426-stussy-camisetas.jpg", "images/0427-stussy-camisetas.jpg", "images/0428-stussy-camisetas.jpg", "images/0429-stussy-camisetas.jpg", "images/0430-stussy-camisetas.jpg"],
     sizes: ["S", "M", "L", "XL"]
   },
 {
@@ -11713,6 +11716,7 @@ function chooseModel(){
   showToast(`${modelText(chosenModel[p.id])} elegido ✓`);
   if(pendingAddId === p.id){ pendingAddId = null; addToCart(p.id); }
 }
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
 function absoluteUrl(src){
   try { return new URL(src, location.href).href; } catch(e){ return src; }
 }
@@ -11838,12 +11842,12 @@ function renderGrid(){
     const isPdfPhoto = /images\/\d{4}-/.test(cover);
     const hasVariants = /m[aá]s (colores|modelos)/i.test(p.name);
     const variantField = hasVariants
-      ? `<input type="text" id="variant-${p.id}" placeholder="Color/modelo que quieres (opcional)" class="variant-input">`
+      ? `<input type="text" id="variant-${p.id}" maxlength="60" placeholder="Color/modelo que quieres (opcional)" class="variant-input">`
       : '';
     return `
     <div class="card">
       <div class="imgwrap ${isPdfPhoto ? 'contain-img' : ''}" onclick="openGallery(${p.id})">
-        <img id="cover-${p.id}" src="${chosenModel[p.id] ? chosenModel[p.id].src : cover}" alt="${p.name}" loading="lazy" decoding="async" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'noimg',innerText:'Añade la foto en:\\n${cover}'}))">
+        <img id="cover-${p.id}" src="${chosenModel[p.id] ? chosenModel[p.id].src : cover}" alt="${p.name}" loading="lazy" decoding="async" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'noimg',innerText:'Foto no disponible'}))">
         ${badge}
       </div>
       <div class="body">
@@ -11873,7 +11877,7 @@ function addToCart(id){
   const p = PRODUCTS.find(x => x.id === id);
   const size = document.getElementById(`size-${id}`).value;
   const variantInput = document.getElementById(`variant-${id}`);
-  const variant = variantInput ? variantInput.value.trim() : '';
+  const variant = variantInput ? variantInput.value.trim().slice(0, 60) : '';
   if(needsModelChoice(p) && !chosenModel[id]){
     pendingAddId = id;
     openGallery(id);
@@ -11888,8 +11892,8 @@ function addToCart(id){
   const custInput = document.getElementById(`cust-${id}`);
   let customName = '', customNum = '';
   if(custInput && custInput.checked){
-    customName = document.getElementById(`cname-${id}`).value.trim().toUpperCase();
-    customNum = document.getElementById(`cnum-${id}`).value.trim();
+    customName = document.getElementById(`cname-${id}`).value.trim().toUpperCase().replace(/[^A-ZÁÉÍÓÚÜÑÇ .'\-]/g,'').slice(0, 14);
+    customNum = document.getElementById(`cnum-${id}`).value.replace(/\D/g,'').slice(0, 2);
     if(!customName && !customNum){ showToast("Escribe el nombre y/o el dorsal ✍️"); return; }
   }
   const custom = !!(customName || customNum);
@@ -11955,7 +11959,7 @@ function renderCart(){
       <img src="${c.image}" onerror="this.style.visibility='hidden'">
       <div class="info">
         <h4>${c.name}</h4>
-        <div class="meta">${c.modelNum ? 'Modelo ' + c.modelNum + ' · ' + c.modelLabel + ' · ' : ''}Talla ${c.size}${c.variant ? ' · ' + c.variant : ''}${c.box ? ' · Con caja' : ''}${(c.customName||c.customNum) ? ' · ✍️ ' + [c.customName, c.customNum].filter(Boolean).join(' ') : ''} · ${money(c.price)}</div>
+        <div class="meta">${c.modelNum ? 'Modelo ' + c.modelNum + ' · ' + c.modelLabel + ' · ' : ''}Talla ${esc(c.size)}${c.variant ? ' · ' + esc(c.variant) : ''}${c.box ? ' · Con caja' : ''}${(c.customName||c.customNum) ? ' · ✍️ ' + esc([c.customName, c.customNum].filter(Boolean).join(' ')) : ''} · ${money(c.price)}</div>
         <div class="qty">
           <button onclick="changeQty(${i},-1)">−</button>
           <span>${c.qty}</span>
@@ -11994,12 +11998,12 @@ function showToast(msg){
 }
 
 function sendOrder(){
-  const name = document.getElementById('custName').value.trim();
-  const phone = document.getElementById('custPhone').value.trim();
-  const notes = document.getElementById('custNotes').value.trim();
+  const name = document.getElementById('custName').value.trim().slice(0, 60);
+  const phone = document.getElementById('custPhone').value.trim().slice(0, 25);
+  const notes = document.getElementById('custNotes').value.trim().slice(0, 500);
 
-  if(!name || !phone){
-    alert("Por favor, rellena tu nombre y tu teléfono.");
+  if(!name || !phone || phone.replace(/\D/g,'').length < 9){
+    alert("Por favor, rellena tu nombre y un teléfono válido.");
     return;
   }
   if(!document.getElementById('deliveryOk').checked){
@@ -12023,7 +12027,7 @@ function sendOrder(){
 
   const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
 
-  window.open(whatsappLink, '_blank');
+  window.open(whatsappLink, '_blank', 'noopener');
 
   closeCheckout();
   showToast("Abriendo WhatsApp ✓");
