@@ -269,7 +269,7 @@ nav::-webkit-scrollbar{display:none;}
   background:var(--panel-2); color:var(--text); border:1px solid var(--line);
   border-radius:6px; padding:8px; font-size:13px; font-family:inherit; min-width:0;
 }
-.card .custom-fields .c-name{ flex:1; text-transform:uppercase; }
+.card .custom-fields .c-name{ flex:1; width:0; text-transform:uppercase; }
 .card .custom-fields .c-num{ width:64px; text-align:center; }
 .sub-bar{ display:none; gap:8px; padding:10px 20px; overflow-x:auto; border-bottom:1px solid var(--line); scrollbar-width:none; }
 .sub-bar.show{ display:flex; }
@@ -456,7 +456,14 @@ footer{text-align:center; padding:30px; color:var(--muted); font-size:12px; bord
   .hero-sub{font-size:14px !important;}
 
   .wrap{padding:20px 12px 80px;}
-  .grid{grid-template-columns:repeat(2, 1fr);}
+  .grid{grid-template-columns:repeat(2, minmax(0, 1fr));}
+  .card{min-width:0;}
+  .card .box-option{font-size:12px; gap:6px; align-items:flex-start;}
+  .card .box-option input{margin-top:1px;}
+  .card .custom-fields{gap:4px;}
+  .card .custom-fields input{font-size:16px; padding:7px 6px;}
+  .card .custom-fields .c-num{width:46px;}
+  .card .eta{font-size:10.5px;}
   .card .body{padding:12px; gap:6px;}
   .card h3{font-size:13px;}
   .card .price{font-size:15px;}
@@ -11761,7 +11768,7 @@ function renderSubTabs(){
   bar.innerHTML = ['Todas', ...subs].map(s =>
     `<button class="subtab ${s===activeSub?'active':''}" onclick="setSub('${s.replace(/'/g,"\\'")}')">${SUB_ICONS[s] ? SUB_ICONS[s] + ' ' : ''}${s}</button>`).join('');
 }
-function setSub(s){ activeSub = s; renderSubTabs(); renderGrid(); }
+function setSub(s){ activeSub = s; renderSubTabs(); renderGrid(); setTimeout(scrollToCatalog, 0); }
 
 function renderTabs(){
   renderSubTabs();
@@ -11775,9 +11782,19 @@ function scrollNav(dir){
   document.getElementById('tabs').scrollBy({ left: dir * 220, behavior: 'smooth' });
 }
 
+function scrollToCatalog(){
+  const bar = document.querySelector('.cat-bar');
+  const grid = document.getElementById('grid');
+  if(!grid) return;
+  const sticky = document.querySelector('.site-header');
+  const offset = (sticky ? sticky.getBoundingClientRect().height : 0) + 12;
+  const top = grid.getBoundingClientRect().top + window.scrollY - offset;
+  if(window.scrollY > top) window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
+}
 function setCategory(cat){
   activeCategory = cat;
   activeSub = "Todas";
+  setTimeout(scrollToCatalog, 0);
   if(searchQuery.trim() !== ''){
     // al elegir una sección se limpia la búsqueda, para ver la sección entera
     document.getElementById('searchInput').value = '';
