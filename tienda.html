@@ -322,6 +322,15 @@ nav::-webkit-scrollbar{display:none;}
 .drawer-foot{padding:20px; border-top:1px solid var(--line);}
 .total-row{display:flex; justify-content:space-between; margin-bottom:14px; font-size:15px;}
 .total-row strong{font-size:18px;}
+.delivery-note{
+  border:1px solid var(--accent); background:rgba(207,232,30,0.07); color:var(--text);
+  padding:10px 12px; font-size:12.5px; line-height:1.5; margin-bottom:14px;
+}
+.delivery-note b{color:var(--accent);}
+.delivery-note:empty{display:none;}
+.card .eta{font-size:11.5px; color:var(--muted); margin-top:-4px;}
+.delivery-ok{display:flex; gap:8px; align-items:flex-start; font-size:13px; margin:4px 0 14px; cursor:pointer;}
+.delivery-ok input{margin-top:2px; accent-color:var(--accent); width:16px; height:16px; flex-shrink:0;}
 .checkout-btn{
   width:100%; background:var(--accent); color:var(--btn-text); border:1px solid var(--accent); padding:14px;
   border-radius:0; font-family:"Inter",sans-serif; font-weight:600;
@@ -512,6 +521,7 @@ footer{text-align:center; padding:30px; color:var(--muted); font-size:12px; bord
   </div>
   <div class="drawer-items" id="drawerItems"></div>
   <div class="drawer-foot">
+    <div class="delivery-note" id="deliveryNote"></div>
     <div class="total-row"><span>Total</span><strong id="cartTotal">0,00 €</strong></div>
     <button class="checkout-btn" id="checkoutBtn" onclick="openCheckout()">Hacer pedido</button>
   </div>
@@ -534,6 +544,8 @@ footer{text-align:center; padding:30px; color:var(--muted); font-size:12px; bord
       <label>Notas (opcional)</label>
       <textarea id="custNotes" placeholder="Talla, dirección, preferencias..."></textarea>
     </div>
+    <div class="delivery-note" id="modalDelivery"></div>
+    <label class="delivery-ok"><input type="checkbox" id="deliveryOk"> He leído y acepto el plazo de entrega estimado</label>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeCheckout()">Cancelar</button>
       <button class="btn-confirm" onclick="sendOrder()">Enviar pedido</button>
@@ -11829,6 +11841,7 @@ function renderGrid(){
         ${p.custom ? `<label class="box-option"><input type="checkbox" id="cust-${p.id}" onchange="document.getElementById('cf-${p.id}').classList.toggle('open', this.checked); document.getElementById('price-${p.id}').innerText = money(${p.price} + (this.checked ? CUSTOM_PRICE : 0))"> Personalizar nombre y dorsal <small>(+${CUSTOM_PRICE} €)</small></label>
         <div class="custom-fields" id="cf-${p.id}"><input class="c-name" id="cname-${p.id}" maxlength="14" placeholder="Nombre"><input class="c-num" id="cnum-${p.id}" inputmode="numeric" maxlength="2" placeholder="Nº" oninput="this.value=this.value.replace(/\\D/g,'')"></div>` : ''}
         <div class="price" id="price-${p.id}">${money(p.price)}</div>
+        <div class="eta">🚚 Entrega aprox. ${p.category === 'Futbol' ? ETA_FUTBOL : ETA_ROPA}</div>
         <button class="add-btn" onclick="addToCart(${p.id})">Añadir al carrito</button>
       </div>
     </div>
@@ -11889,7 +11902,26 @@ function cartTotal(){
   return cart.reduce((sum,c) => sum + c.price*c.qty, 0);
 }
 
+/* ---------- PLAZOS DE ENTREGA ---------- */
+const ETA_FUTBOL = "unos 15 días";
+const ETA_ROPA = "unas 4 semanas";
+function isFutbol(c){ const p = PRODUCTS.find(x => x.id === c.id); return !!(p && p.category === 'Futbol'); }
+function deliveryParts(){
+  const fut = cart.some(isFutbol), ropa = cart.some(c => !isFutbol(c));
+  const parts = [];
+  if(fut) parts.push(['⚽ Camisetas de fútbol', ETA_FUTBOL]);
+  if(ropa) parts.push(['👕 Ropa y resto de productos', ETA_ROPA]);
+  return parts;
+}
+function deliveryHTML(){
+  const parts = deliveryParts();
+  if(!parts.length) return '';
+  return `🚚 <b>Plazo de entrega estimado</b><br>` + parts.map(([t,d]) => `${t}: <b>${d}</b>`).join('<br>') +
+    (parts.length > 1 ? `<br><small>Si quieres todo junto, se envía cuando llegue lo último.</small>` : '');
+}
+
 function renderCart(){
+  const dn = document.getElementById('deliveryNote'); if(dn) dn.innerHTML = deliveryHTML();
   const box = document.getElementById('drawerItems');
   const count = cart.reduce((s,c)=>s+c.qty,0);
   document.getElementById('cartCount').innerText = count;
@@ -11929,6 +11961,8 @@ function closeCart(){
 
 function openCheckout(){
   if(cart.length === 0) return;
+  document.getElementById('modalDelivery').innerHTML = deliveryHTML();
+  document.getElementById('deliveryOk').checked = false;
   document.getElementById('modalOverlay').classList.add('show');
 }
 function closeCheckout(){
@@ -11951,6 +11985,10 @@ function sendOrder(){
     alert("Por favor, rellena tu nombre y tu teléfono.");
     return;
   }
+  if(!document.getElementById('deliveryOk').checked){
+    showToast("Marca la casilla del plazo de entrega 👆");
+    return;
+  }
 
   let msg = `🛍️ *NUEVO PEDIDO — JG OUTLET*\n`;
   msg += `━━━━━━━━━━━━━━━\n\n`;
@@ -11963,6 +12001,7 @@ function sendOrder(){
   });
   msg += `\n\n━━━━━━━━━━━━━━━\n`;
   msg += `💰 *TOTAL: ${money(cartTotal())}*\n\n`;
+  msg += `🚚 *Plazo estimado:* ${deliveryParts().map(([t,d]) => t.replace(/^\S+\s/,'') + ' ' + d).join(' · ')} (aceptado por el cliente)\n\n`;
   msg += `¡Gracias! Quedo a la espera de confirmar talla y forma de pago 🙌`;
 
   const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
