@@ -88,10 +88,12 @@ header{
   border-bottom:1px solid var(--line); padding:0 6px;
 }
 .cat-bar::before, .cat-bar::after{
-  content:""; position:absolute; top:0; bottom:0; width:20px; pointer-events:none; z-index:1;
+  content:""; position:absolute; top:0; bottom:0; width:28px; pointer-events:none; z-index:1;
+  opacity:0; transition:opacity .2s ease;
 }
-.cat-bar::before{ left:34px; background:linear-gradient(to right, rgba(12,12,13,0.9), transparent); }
-.cat-bar::after{ right:34px; background:linear-gradient(to left, rgba(12,12,13,0.9), transparent); }
+.cat-bar::before{ left:var(--fade-l, 40px); background:linear-gradient(to right, rgba(12,12,13,1), rgba(12,12,13,0)); }
+.cat-bar::after{ right:var(--fade-r, 40px); background:linear-gradient(to left, rgba(12,12,13,1), rgba(12,12,13,0)); }
+.cat-bar.fade-left::before, .cat-bar.fade-right::after{ opacity:1; }
 .search-bar{
   padding:14px 20px; border-bottom:1px solid var(--line);
   display:flex; flex-direction:column; align-items:center; gap:8px;
@@ -11780,8 +11782,27 @@ function renderTabs(){
   tabs.innerHTML = getCategories().map(cat =>
     `<button class="tab ${cat===activeCategory?'active':''}" onclick="setCategory('${cat}')">${catLabel(cat)}</button>`
   ).join('');
+  requestAnimationFrame(updateNavFades);
 }
 
+function updateNavFades(){
+  const bar = document.querySelector('.cat-bar');
+  const nav = document.getElementById('tabs');
+  if(!bar || !nav) return;
+  const br = bar.getBoundingClientRect(), nr = nav.getBoundingClientRect();
+  bar.style.setProperty('--fade-l', Math.round(nr.left - br.left) + 'px');
+  bar.style.setProperty('--fade-r', Math.round(br.right - nr.right) + 'px');
+  const max = nav.scrollWidth - nav.clientWidth;
+  bar.classList.toggle('fade-left', nav.scrollLeft > 4);
+  bar.classList.toggle('fade-right', nav.scrollLeft < max - 4);
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const nav = document.getElementById('tabs');
+  if(nav) nav.addEventListener('scroll', updateNavFades, { passive:true });
+  window.addEventListener('resize', updateNavFades);
+  setTimeout(updateNavFades, 0);
+});
+window.addEventListener('load', updateNavFades);
 function scrollNav(dir){
   document.getElementById('tabs').scrollBy({ left: dir * 220, behavior: 'smooth' });
 }
