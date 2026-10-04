@@ -240,6 +240,15 @@ nav::-webkit-scrollbar{display:none;}
 .card img{width:100%; height:100%; object-fit:cover; display:block;}
 .card .imgwrap.contain-img{background:#ffffff;}
 .card .imgwrap.contain-img img{object-fit:contain;}
+/* fondos sin franjas: relleno con la propia foto difuminada */
+.imgwrap .blurbg, .gallery-stage .blurbg{
+  position:absolute; inset:-24px; background-size:cover; background-position:center;
+  filter:blur(22px) saturate(1.1) brightness(0.92); transform:scale(1.08); z-index:0; pointer-events:none;
+}
+.card .imgwrap img{ position:relative; z-index:1; }
+.card .imgwrap.fill img{ object-fit:cover; }
+.card .imgwrap.blurfill{ background:#1a1a1a; }
+.card .imgwrap.blurfill img{ object-fit:contain; }
 .card .noimg{
   width:100%; height:100%; display:flex; align-items:center; justify-content:center;
   color:var(--muted); font-size:12px; text-align:center; padding:12px;
@@ -11955,7 +11964,7 @@ function renderGrid(){
     return `
     <div class="card">
       <div class="imgwrap ${isPdfPhoto ? 'contain-img' : ''}" onclick="openGallery(${p.id})">
-        <img id="cover-${p.id}" src="${chosenModel[p.id] ? chosenModel[p.id].src : cover}" alt="${p.name}" loading="lazy" decoding="async" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'noimg',innerText:'Foto no disponible'}))">
+        <img id="cover-${p.id}" src="${chosenModel[p.id] ? chosenModel[p.id].src : cover}" alt="${p.name}" loading="lazy" decoding="async" onload="fitCardImage(this)" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'noimg',innerText:'Foto no disponible'}))">
         ${badge}
       </div>
       <div class="body">
@@ -12169,18 +12178,46 @@ function closeGallery(){
   document.getElementById('galleryStage').innerHTML = ''; // para que se pare el vídeo si estaba sonando
 }
 
-/* Rellena los huecos a los lados de la foto con el color de sus bordes (así no salen franjas negras) */
-function fillStageEdges(img){
-  const stage = document.getElementById('galleryStage');
+/* ¿Los bordes de la foto son blancos/lisos? (foto de estudio) -> se ve bien sobre blanco */
+function edgeInfo(img){
   try{
-    const c = document.createElement('canvas'); const W = 40, H = 40;
-    c.width = W; c.height = H;
+    const W = 32, H = 32, c = document.createElement('canvas'); c.width = W; c.height = H;
     const ctx = c.getContext('2d'); ctx.drawImage(img, 0, 0, W, H);
     const d = ctx.getImageData(0, 0, W, H).data;
-    const avg = x => { let r=0,g=0,b=0; for(let y=0;y<H;y++){ const k=(y*W+x)*4; r+=d[k]; g+=d[k+1]; b+=d[k+2]; } return [r/H|0,g/H|0,b/H|0]; };
-    const L = avg(1), R = avg(W-2);
-    stage.style.background = `linear-gradient(90deg, rgb(${L}) 0%, rgb(${L}) 50%, rgb(${R}) 50%, rgb(${R}) 100%)`;
-  }catch(e){ stage.style.background = '#fff'; }
+    let n = 0, bright = 0, spread = 0;
+    for(let y = 0; y < H; y++) for(let x = 0; x < W; x++){
+      if(x > 1 && x < W-2 && y > 1 && y < H-2) continue;
+      const k = (y*W + x)*4, r = d[k], g = d[k+1], b = d[k+2];
+      bright += (r+g+b)/3; spread += Math.max(r,g,b) - Math.min(r,g,b); n++;
+    }
+    return { white: bright/n > 228 && spread/n < 14 };
+  }catch(e){ return { white:false }; }
+}
+/* Tarjetas: nada de franjas. Foto de estudio con fondo blanco -> entera sobre blanco.
+   Foto casi cuadrada -> rellena el cuadro. Foto muy alargada -> entera con fondo de la propia foto difuminada. */
+function fitCardImage(img){
+  const wrap = img.parentElement;
+  if(!wrap || !wrap.classList.contains('imgwrap')) return;
+  wrap.classList.remove('fill','blurfill','contain-img');
+  const old = wrap.querySelector('.blurbg'); if(old) old.remove();
+  const r = img.naturalWidth / img.naturalHeight;
+  if(!r) return;
+  if(edgeInfo(img).white){ wrap.classList.add('contain-img'); return; }
+  if(r > 0.78 && r < 1.28){ wrap.classList.add('fill'); return; }
+  wrap.classList.add('blurfill');
+  const bg = document.createElement('div'); bg.className = 'blurbg';
+  bg.style.backgroundImage = `url("${img.getAttribute('src')}")`;
+  wrap.insertBefore(bg, img);
+}
+/* Rellena los huecos alrededor de la foto de la galería (así no salen franjas) */
+function fillStageEdges(img){
+  const stage = document.getElementById('galleryStage');
+  const old = stage.querySelector('.blurbg'); if(old) old.remove();
+  if(edgeInfo(img).white){ stage.style.background = '#fff'; return; }
+  stage.style.background = '#111';
+  const bg = document.createElement('div'); bg.className = 'blurbg';
+  bg.style.backgroundImage = `url("${img.getAttribute('src')}")`;
+  stage.insertBefore(bg, stage.firstChild);
 }
 function renderGalleryStage(){
   const stage = document.getElementById('galleryStage');
