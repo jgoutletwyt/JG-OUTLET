@@ -11738,12 +11738,17 @@ function getMedia(p){
   // admite tanto "images: [...]" (varias fotos) como el antiguo "image: '...'" (una sola)
   const imgs = (p.images && p.images.length) ? p.images : (p.image ? [p.image] : []);
   // Foto de catálogo: empieza por 4 cifras (0001-...) o contiene "-portada". El resto son fotos reales.
-  const isRealSrc = s => !(/images\/\d{4}-/.test(s) || /-portada\./.test(s));
+  const isRealSrc = s => !(/images\/\d{4}-/.test(s) || /-portada\./.test(s) || CATALOG_EXTRA.has(s));
   const media = imgs.map(src => ({type:'image', src, isReal: isRealSrc(src)}));
   if(p.video){ media.push({type:'video', src:p.video, isReal: isRealSrc(p.video)}); }
   return media;
 }
 
+/* Fotos con fondo blanco que van en "Modelos disponibles" aunque su nombre sea de foto real */
+const CATALOG_EXTRA = new Set([
+  "images/sudadera-scuffers-real-5.jpg",
+  "images/sudadera-scuffers-real-7.jpg"
+]);
 function getCover(p){
   const media = getMedia(p);
   if(media.length === 0) return '';
