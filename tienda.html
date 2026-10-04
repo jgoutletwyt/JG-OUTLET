@@ -449,6 +449,24 @@ nav::-webkit-scrollbar{display:none;}
 }
 .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
 
+.header-actions{ display:flex; align-items:center; gap:6px; }
+.social{
+  display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px;
+  color:var(--muted); border-radius:50%; transition:color .15s ease, background .15s ease;
+}
+.social svg{ width:20px; height:20px; }
+.social:hover, .social:focus-visible{ color:var(--accent); background:rgba(207,232,30,0.08); }
+.header-actions .cart-btn{ margin-left:6px; }
+.footer-social{ display:flex; justify-content:center; gap:22px; margin-bottom:14px; flex-wrap:wrap; }
+.footer-social a{ display:inline-flex; align-items:center; gap:7px; color:var(--text); text-decoration:none; font-size:13px; letter-spacing:0.03em; }
+.footer-social a:hover{ color:var(--accent); }
+.footer-social svg{ width:18px; height:18px; }
+@media (max-width:640px){
+  .header-actions{ gap:2px; }
+  .social{ width:34px; height:34px; }
+  .social svg{ width:18px; height:18px; }
+  .header-actions .cart-btn{ margin-left:4px; }
+}
 footer{text-align:center; padding:30px; color:var(--muted); font-size:12px; border-top:1px solid var(--line);}
 
 /* ============================================================
@@ -497,9 +515,13 @@ footer{text-align:center; padding:30px; color:var(--muted); font-size:12px; bord
   <div class="logo-wrap">
     <img class="logo-img" src="images/logo.png" alt="JG Outlet" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'logo-fallback marker',innerHTML:'JG <span class=&quot;pop&quot;>Outlet</span>'}))">
   </div>
-  <button class="cart-btn" onclick="openCart()">
+  <div class="header-actions">
+    <a class="social" href="https://www.tiktok.com/@jgfindswyt" target="_blank" rel="noopener noreferrer" aria-label="TikTok @jgfindswyt"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 3c.3 2.2 1.6 3.7 3.9 3.9v3.1c-1.4.1-2.7-.3-3.9-1v6.3c0 3.9-3.2 6.2-6.4 5.6-2.9-.5-4.9-3.3-4.3-6.3.5-2.6 3-4.5 5.8-4.2v3.3c-1.3-.3-2.7.4-3 1.6-.4 1.4.6 2.8 2 2.9 1.5.1 2.6-.9 2.6-2.6V3h3.3z"/></svg></a>
+    <a class="social" href="https://www.instagram.com/jgoutletwyt/" target="_blank" rel="noopener noreferrer" aria-label="Instagram @jgoutletwyt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="0.9" fill="currentColor" stroke="none"/></svg></a>
+    <button class="cart-btn" onclick="openCart()">
     Carrito <span class="cart-count" id="cartCount">0</span>
   </button>
+  </div>
 </header>
 <div class="cat-bar">
   <button class="cat-arrow cat-arrow-left" onclick="scrollNav(-1)" aria-label="Ver categorías anteriores">‹</button>
@@ -529,7 +551,13 @@ footer{text-align:center; padding:30px; color:var(--muted); font-size:12px; bord
   <div class="grid" id="grid"></div>
 </div>
 
-<footer>JG Outlet · Granada · Pedidos gestionados por WhatsApp</footer>
+<footer>
+  <div class="footer-social">
+    <a href="https://www.tiktok.com/@jgfindswyt" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 3c.3 2.2 1.6 3.7 3.9 3.9v3.1c-1.4.1-2.7-.3-3.9-1v6.3c0 3.9-3.2 6.2-6.4 5.6-2.9-.5-4.9-3.3-4.3-6.3.5-2.6 3-4.5 5.8-4.2v3.3c-1.3-.3-2.7.4-3 1.6-.4 1.4.6 2.8 2 2.9 1.5.1 2.6-.9 2.6-2.6V3h3.3z"/></svg><span>@jgfindswyt</span></a>
+    <a href="https://www.instagram.com/jgoutletwyt/" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="0.9" fill="currentColor" stroke="none"/></svg><span>@jgoutletwyt</span></a>
+  </div>
+  JG Outlet · Granada · Pedidos gestionados por WhatsApp
+</footer>
 
 <!-- ---------- carrito ---------- -->
 <div class="overlay" id="overlay" onclick="closeCart()"></div>
